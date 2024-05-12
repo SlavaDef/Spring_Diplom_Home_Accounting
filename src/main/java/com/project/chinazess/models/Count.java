@@ -17,7 +17,12 @@ public class Count {
 
     private Long count;
 
+
+
     @OneToMany(mappedBy="count", cascade=CascadeType.ALL)
-    private List<Plus> pluses = new ArrayList<>();
+    private List<Salary> salaries = new ArrayList<>();
+
+    @OneToMany(mappedBy="count", cascade=CascadeType.ALL)
+    private List<Bonus> bonuses = new ArrayList<>();
 
 }

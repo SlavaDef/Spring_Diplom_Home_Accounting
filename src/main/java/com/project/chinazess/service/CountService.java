@@ -1,7 +1,9 @@
 package com.project.chinazess.service;
 
 import com.project.chinazess.models.Count;
+import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.CountRepo;
+import com.project.chinazess.repo.SalaryRepo;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,19 @@ import org.springframework.stereotype.Service;
 public class CountService {
 
     private CountRepo repo;
+    private SalaryRepo salRepo;
+    private SalaryService service;
+
 
     @Transactional
    public Long getCount(){
-       return repo.findById(1L).get().getCount();   }
+       // Count count = new Count();
+       // count.setSalaries(salRepo.findAll());
+      return service.getSalaryCount();
+
+        }
+
+
 
     @Transactional
     public void addCount(Count count){

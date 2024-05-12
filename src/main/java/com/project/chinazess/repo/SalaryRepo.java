@@ -1,9 +1,9 @@
 package com.project.chinazess.repo;
 
-import com.project.chinazess.models.Plus;
+import com.project.chinazess.models.Salary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PlusRopo extends JpaRepository<Plus, Long> {
+public interface SalaryRepo extends JpaRepository<Salary, Long> {
 }

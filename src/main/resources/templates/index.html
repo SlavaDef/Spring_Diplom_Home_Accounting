@@ -3,9 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <title>MyCount</title>
-</head>
-<body style="background-color: gold">
-<h1 th:text="'Hello dear youser, you count is ' + ${count} + '_UAN'" ></h1>
 
+    <style>
+        #example1 {
+            border: 2px solid #006fff;
+            padding: 10px;
+            border-radius: 25px;
+
+        }
+
+        #example2 {
+            border: 2px solid red;
+            padding: 10px;
+            border-radius: 50px 20px;
+        }
+
+        #example3 {
+            border: 2px solid red;
+            padding: 10px;
+            border-radius: 50px 20px;
+        }
+        #example4 {
+            border: 2px solid red;
+            padding: 10px;
+            border-radius: 50px 20px;
+        }
+
+        </style>
+
+</head>
+<body style="background-color: orange">
+
+<br>
+<br>
+<br>
+<br>
+
+<div id="example1" style = "background-color:#ffdd00">
+    <br>
+    <br>
+<div style="text-align: center;"><h1>Expense Log</h1></div>
+
+<div style="background-color:#0095ff" id="example2">
+
+    <table style="width:80%">
+        <tr>
+            <th><h2 style="color: orange">Exprenses</h2></th>
+            <th>UAN</th>
+            <th><a class=" py-2 text-dark" href="/add_salary"><h1>+</h1></a>
+              <!--  <div>
+                    <button type="submit" name="submit_button" value="main_button"><h2>+</h2></button>
+                </div> -->
+            </th>
+        </tr>
+        <tr>
+            <th><h2>Today</h2></th>
+            <th>???</th>
+        </tr>
+        <tr>
+            <th><h2>Week</h2></th>
+            <th>???</th>
+        </tr>
+        <tr>
+            <th><h2>Month</h2></th>
+            <th>???</th>
+        </tr>
+    </table>
+
+</div>
+    <br>
+    <br>
+    <div style="background-color:#0095ff" id="example4">
+
+    <table style="width:80%">
+
+        <tr>
+            <th><h2 style="color: green">Income</h2></th>
+            <th>UAN</th>
+            <th><a class=" py-2 text-dark" href="/add_salary"><h1>+</h1></a></th>
+        </tr>
+        <tr>
+            <th><h2>Today</h2></th>
+            <th><h2 th:text=" ${today} "></h2></th>
+        </tr>
+        <tr>
+            <th><h2>Week</h2></th>
+            <th>???</th>
+        </tr>
+        <tr>
+            <th><h2>Month</h2></th>
+            <th>???</th>
+        </tr>
+
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div  style="text-align: center; background-color:#0095ff" id="example3">
+    <table style="width:80%">
+        <tr>
+            <th><h2 style="color: orange">Count</h2></th>
+            <th><h2>UAN</h2></th>
+        </tr>
+        <tr>
+            <th><h2>All time</h2></th>
+            <th><h2 th:text=" ${count} " ></h2></th>
+        </tr>
+
+
+
+    </table>
+</div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <button type="button" class="w3-button w3-yellow" name="submit_button2" value="main_button2">All Exprenses </button>
+    <button type="button" class="w3-button w3-green" name="submit_button9" value="main_button9">All Incomes </button>
+
+
+</div>
 </body>
 </html>

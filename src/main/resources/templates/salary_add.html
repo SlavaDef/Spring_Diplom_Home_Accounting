@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ending new Income</title>
+</head>
+<body style="background-color: darkkhaki">
+<h1>Incoming</h1>
+<hr>
+<script type="text/javascript">
+    document.write(Date());
+</script>
+<br>
+<br>
+<hr>
+<select name="user_profile_color_1">
+    <option value="">Choose incoming</option>
+    <option value="1">salary</option>
+    <option value="2">bonus</option>
+    <option value="3">presents</option>
+    <option value="4">another</option>
+</select>
+<br>
+<hr>
+<div class="container mt-5 mb-5">
+    <form action="/add_salary" method="post">
+        <input type="text" name="salary" placeholder="salary" class="form-control"><br><br>
+        <input type="text" name="description" placeholder="add description" class="form-control"><br><br>
+        <button type="submit" class="btn btn-success">Add salary</button> <!-- при натисканні данні будуть відправлятися на сервер-->
+    </form>
+
+</div>
+
+</body>
+</html>
