@@ -1,12 +1,12 @@
 package com.project.chinazess.service;
 
 import com.project.chinazess.models.Bonus;
-import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.BonusRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,6 +17,7 @@ public class BonusService {
 
     @Transactional
     public Bonus addBonus(Bonus bonus) {
+        bonus.setDate(LocalDate.now());
         return repo.save(bonus);
     }
 

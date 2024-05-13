@@ -27,6 +27,7 @@ public class SalaryService {
     public Long getSalaryCount() {
         Long count = 0L;
         List<Salary> salaries = salaryRepo.findAll();
+
         for (Salary salary : salaries) {
             count += salary.getSalary();
         }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ending new Income</title>
+</head>
+<body style="background-color: darkkhaki">
+<h1>Incoming</h1>
+<hr>
+<script type="text/javascript">
+    document.write(Date());
+</script>
+<br>
+<br>
+<hr>
+
+<select onchange="window.location.href=this.options[this.selectedIndex].value">
+    <option value="">Choose incoming</option>
+    <option value="http://localhost:8080/add_salary">salary</option>
+    <option value="http://localhost:8080/add_bonus">bonus</option>
+    <option value="http://localhost:8080/add_present">presents</option>
+    <option value="4">another</option>
+</select>
+
+<br>
+<hr>
+
+</body>
+</html>

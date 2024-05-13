@@ -15,21 +15,26 @@ public class CountService {
     private CountRepo repo;
     private SalaryRepo salRepo;
     private SalaryService service;
+    private BonusService bonusService;
+    private PresentsService presentsService;
 
 
     @Transactional
-   public Long getCount(){
-       // Count count = new Count();
-       // count.setSalaries(salRepo.findAll());
-      return service.getSalaryCount();
+    public Long getCount() { // return count from all entityes
 
-        }
+        return service.getSalaryCount() + bonusService.getBonusCount() + presentsService.getPresentCount();
 
+    }
+
+    @Transactional
+    public Count getCountById(Long id) {
+        return repo.getReferenceById(id);
+    }
 
 
     @Transactional
-    public void addCount(Count count){
-       repo.save(count);
+    public void addCount(Count count) {
+        repo.save(count);
     }
 
 

@@ -16,7 +16,7 @@ public class AppConfig {
             public void run(String... strings) throws Exception {
 
                 Count count = new Count();
-                count.setCount(115112L);
+               // count.setCount(115112L);
                 service.addCount(count);
 
 
