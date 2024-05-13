@@ -5,15 +5,25 @@
     <title>MyCount</title>
 
     <style>
+        body {
+            background-image: url('../static/ocean.png');
+            background-size: cover;
+        }
+
         h2 {
             font-family: 'Comic Sans MS', 'Verdana', sans-serif;
         }
 
+
         #example1 {
-            border: 2px solid #006fff;
+            border: 10px solid #006fff;
             padding: 10px;
             border-radius: 25px;
-
+            width: 900px;
+            height: 1180px;
+            position: absolute;
+            top: 5%;
+            left: 20%;
         }
 
         #example2 {
@@ -37,15 +47,14 @@
     </style>
 
 </head>
-<body style="background-color: orange">
+<body>
 
 <br>
 <br>
 <br>
 <br>
 
-<div id="example1" style="background-color:#ffdd00">
-    <br>
+<div id="example1"  style="background-color:#ffdd00">
     <br>
     <div style="text-align: center;"><h1>Expense Log</h1></div>
 
@@ -125,9 +134,6 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
 
     <table style="width:80%">
         <tr>
@@ -146,6 +152,6 @@
 </div>
 <button class="w3-button w3-circle w3-black">+</button>
 
-<img src=”/static/icons8.jpg“ alt="Mountain View" width="500" height="377">
+<img src= url('../static/ocean.png') alt="Mountain View" width="500" height="377">
 </body>
 </html>
