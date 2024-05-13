@@ -33,4 +33,9 @@ public class SalaryService {
         }
         return count;
     }
+
+    @Transactional
+    public List<Salary> getAllSalaries() {
+        return salaryRepo.findAll();
+    }
 }

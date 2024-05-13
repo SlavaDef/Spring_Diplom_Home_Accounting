@@ -5,6 +5,10 @@
     <title>MyCount</title>
 
     <style>
+        h2 {
+            font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+        }
+
         #example1 {
             border: 2px solid #006fff;
             padding: 10px;
@@ -23,13 +27,14 @@
             padding: 10px;
             border-radius: 50px 20px;
         }
+
         #example4 {
             border: 2px solid red;
             padding: 10px;
             border-radius: 50px 20px;
         }
 
-        </style>
+    </style>
 
 </head>
 <body style="background-color: orange">
@@ -39,96 +44,108 @@
 <br>
 <br>
 
-<div id="example1" style = "background-color:#ffdd00">
+<div id="example1" style="background-color:#ffdd00">
     <br>
     <br>
-<div style="text-align: center;"><h1>Expense Log</h1></div>
+    <div style="text-align: center;"><h1>Expense Log</h1></div>
 
-<div style="background-color:#0095ff" id="example2">
+    <div style="background-color:#0095ff" id="example2">
 
-    <table style="width:80%">
-        <tr>
-            <th><h2 style="color: #8c00ff">Exprenses</h2></th>
-            <th>UAN</th>
-            <th><a class=" py-2 text-dark" href="/add_salary"><h1>+</h1></a>
-              <!--  <div>
-                    <button type="submit" name="submit_button" value="main_button"><h2>+</h2></button>
-                </div> -->
-            </th>
-        </tr>
-        <tr>
-            <th><h2>Today</h2></th>
-            <th>???</th>
-        </tr>
-        <tr>
-            <th><h2>Week</h2></th>
-            <th>???</th>
-        </tr>
-        <tr>
-            <th><h2>Month</h2></th>
-            <th>???</th>
-        </tr>
-    </table>
+        <table style="width:80%">
+            <tr>
+                <th><h2 style="color: #8c00ff">Exprenses</h2></th>
+                <th>UAN</th>
+                <th><a class=" py-2 text-dark" href="/add_salary"><h1>+</h1></a>
+                    <!--  <div>
+                          <button type="submit" name="submit_button" value="main_button"><h2>+</h2></button>
+                      </div> -->
+                </th>
+            </tr>
+            <tr>
+                <th><h2>Today</h2></th>
+                <th>???</th>
+            </tr>
+            <tr>
+                <th><h2>Week</h2></th>
+                <th>???</th>
+            </tr>
+            <tr>
+                <th><h2>Month</h2></th>
+                <th>???</th>
+            </tr>
+        </table>
 
-</div>
+    </div>
     <br>
     <br>
     <div style="background-color:#0095ff" id="example4">
 
+        <table style="width:80%">
+
+            <tr>
+                <th><h2 style="color: #730080">Income</h2></th>
+                <th>UAN</th>
+                <th><a class=" py-2 text-dark" href="/add"><h1>+</h1></a></th>
+            </tr>
+            <tr>
+                <th><h2>Today</h2></th>
+                <th><h2 th:text=" ${today} "></h2></th>
+            </tr>
+            <tr>
+                <th><h2>Week</h2></th>
+                <th><h2 th:text=" ${week} "></h2></th>
+            </tr>
+            <tr>
+                <th><h2>Month</h2></th>
+                <th><h2 th:text=" ${month} "></h2></th>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <br>
+    <br>
+
+    <div style="text-align: center; background-color:#0095ff" id="example3">
+        <table style="width:80%">
+            <tr>
+                <th><h2 style="color: orange">Count</h2></th>
+                <th><h2>UAN</h2></th>
+            </tr>
+            <tr>
+                <th><h2>All time</h2></th>
+                <th><h2 th:text=" ${count} "></h2></th>
+            </tr>
+
+
+        </table>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <table style="width:80%">
-
         <tr>
-            <th><h2 style="color: #730080">Income</h2></th>
-            <th>UAN</th>
-            <th><a class=" py-2 text-dark" href="/add"><h1>+</h1></a></th>
+            <th><a class=" py-2 text-dark" href="/all_exprenses"><h1>All Exprenses</h1></a></th>
+            <th><a class=" py-2 text-dark" href="/all_incomes"><h1>All Incomes</h1></a></th>
         </tr>
-        <tr>
-            <th><h2>Today</h2></th>
-            <th><h2 th:text=" ${today} "></h2></th>
-        </tr>
-        <tr>
-            <th><h2>Week</h2></th>
-            <th>???</th>
-        </tr>
-        <tr>
-            <th><h2>Month</h2></th>
-            <th>???</th>
-        </tr>
-
     </table>
 
-</div>
+    <!--  <button type="button"  class="w3-button w3-block w3-black" style="width:45%">All Exprenses</button>
+      <button type="button"  class="w3-button w3-right" style="width:45%">All Incomes</button>
+      <button class="w3-button w3-circle w3-black">+</button> -->
 
-<br>
-<br>
-
-<div  style="text-align: center; background-color:#0095ff" id="example3">
-    <table style="width:80%">
-        <tr>
-            <th><h2 style="color: orange">Count</h2></th>
-            <th><h2>UAN</h2></th>
-        </tr>
-        <tr>
-            <th><h2>All time</h2></th>
-            <th><h2 th:text=" ${count} " ></h2></th>
-        </tr>
-
-
-
-    </table>
-</div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-    <button type="button"  class="w3-button w3-block w3-black" style="width:45%">All Exprenses</button>
-    <button type="button"  class="w3-button w3-right" style="width:45%">All Incomes</button>
+    <img src=”icons8.png“>
+    <!-- <h2 th:text=" ${countbyid} "></h2> -->
 
 </div>
+<button class="w3-button w3-circle w3-black">+</button>
+
+<img src=”/static/icons8.jpg“ alt="Mountain View" width="500" height="377">
 </body>
 </html>

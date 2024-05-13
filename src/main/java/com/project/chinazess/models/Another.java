@@ -2,25 +2,26 @@ package com.project.chinazess.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
-public class Salary {
+public class Another {
 
-    public Salary() {
+    public Another() {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @ToString.Exclude
     private Long id;
 
-    private Long salary;
+    private Long another;
 
     private String description;
-
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate date;
@@ -29,8 +30,8 @@ public class Salary {
     @JoinColumn(name="count_id")
     private Count count;
 
-    public Salary(Long salary, String description) {
-        this.salary = salary;
+    public Another(Long another, String description) {
+        this.another = another;
         this.description = description;
     }
 }
