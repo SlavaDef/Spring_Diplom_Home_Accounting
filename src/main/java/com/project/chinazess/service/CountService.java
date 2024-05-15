@@ -15,7 +15,7 @@ import java.util.List;
 public class CountService {
 
     private CountRepo repo;
-    private SalaryService service;
+    private SalaryService salaryService;
     private BonusService bonusService;
     private PresentsService presentsService;
     private AnotherService anotherService;
@@ -24,8 +24,8 @@ public class CountService {
     @Transactional
     public Long getCount() { // return count from all entityes
 
-        return service.getSalaryCount() + bonusService.getBonusCount()
-                + presentsService.getPresentCount()+anotherService.getAnotherCount();
+        return salaryService.getSalaryCount() + bonusService.getBonusCount()
+                + presentsService.getPresentCount() + anotherService.getAnotherCount();
 
     }
 
@@ -51,6 +51,12 @@ public class CountService {
         repo.save(count);
     }
 
+    @Transactional
+    public Long getCountByDay() { // return count by day from all entityes
 
+        return bonusService.findBonusByToday() + anotherService.getAnotherCount()
+                + salaryService.findBonusByToday() + presentsService.findBonusByToday();
+
+    }
 
 }

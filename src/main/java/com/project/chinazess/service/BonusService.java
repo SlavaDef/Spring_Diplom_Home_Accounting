@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,15 +18,36 @@ public class BonusService {
 
     @Transactional
     public Bonus addBonus(Bonus bonus) {
-        bonus.setDate(LocalDate.now());
+        // bonus.setDate(LocalDate.now());
         return repo.save(bonus);
     }
 
     @Transactional
     public Long getBonusCount() {
-        Long count = 0L;
         List<Bonus> bonuses = repo.findAll();
-        for (Bonus bonus : bonuses ) {
+        return returnCount(bonuses);
+    }
+
+    @Transactional
+    public Long findBonusByToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        List<Bonus>  bonuses = repo.findAllByDate(test);
+        return returnCount(bonuses);
+    }
+
+    @Transactional
+    public Long findBonusByYear() {
+        LocalDate beginYear = LocalDate.of(LocalDate.now().getYear(), 1, 1);
+        LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+        List<Bonus> bonuses = repo.findAllByDateBetween(beginYear, endYear);
+        return returnCount(bonuses);
+    }
+
+    @Transactional
+    public Long returnCount(List<Bonus> bonuses) {
+        Long count = 0L;
+        for (Bonus bonus : bonuses) {
             count += bonus.getBonus();
         }
         return count;

@@ -1,5 +1,6 @@
 package com.project.chinazess.service;
 
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.SalaryRepo;
 import lombok.AllArgsConstructor;
@@ -37,5 +38,17 @@ public class SalaryService {
     @Transactional
     public List<Salary> getAllSalaries() {
         return salaryRepo.findAll();
+    }
+
+    @Transactional
+    public Long findBonusByToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        Long count = 0L;
+        List<Salary>  salaries = salaryRepo.findAllByDate(test);
+        for (Salary sal : salaries) {
+            count += sal.getSalary();
+        }
+        return count;
     }
 }

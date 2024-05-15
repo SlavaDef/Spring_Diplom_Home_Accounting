@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 
 
 @AllArgsConstructor
@@ -27,10 +26,11 @@ public class AddController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        model.addAttribute( "count", countService.getCount());
-        model.addAttribute( "today", countService.getCount());// toDo
+        model.addAttribute( "today", countService.getCountByDay());
         model.addAttribute( "week", countService.getCount());
-        model.addAttribute( "month", countService.getCount());
+        model.addAttribute( "month", bonusService.findBonusByToday());
+        model.addAttribute( "count", countService.getCount());
+       // model.addAttribute( "byMonth", bonusService.findBonusByDate_Month(2));
        // model.addAttribute( "countbyid", countService.getCountById2(1L));
         return "index";
     }
@@ -112,8 +112,10 @@ public class AddController {
         model.addAttribute( "sal", salaryService.getSalaryCount());
         model.addAttribute( "bon", bonusService.getBonusCount());
         model.addAttribute( "pres", presentsService.getPresentCount());
-        model.addAttribute( "anot", anotherService.getAnotherCount());
+        model.addAttribute( "anot", anotherService.findAnotherByToday());
         model.addAttribute( "all_count", countService.getCount());
+        model.addAttribute( "byMonth", bonusService.findBonusByToday());
+        model.addAttribute( "bonByYear", bonusService.findBonusByYear());
         return "all_incomes";
     }
 

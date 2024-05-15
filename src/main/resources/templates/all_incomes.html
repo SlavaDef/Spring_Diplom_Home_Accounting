@@ -7,29 +7,68 @@
     <style>
         h2 {
             font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+            color: #730080;
         }
 
         body {
-            background-image: url('../static/egs.png');
+            background-image: url('../static/woter.jpg');
             background-size: cover;
         }
         </style>
 </head>
 <body >
 
-<h2>By day</h2>
 
+
+<table style="width:80%">
+
+    <tr>
+
+<th>
 <ul>
+    <h2>By day</h2>
     <li><h2 th:text="'Salary = '+ ${sal} "></h2></li>
     <li><h2 th:text="'Bonus = ' + ${bon} "></h2></li>
     <li><h2 th:text="'Presents = ' + ${pres} "></h2></li>
     <li><h2 th:text="'Presents = ' + ${anot} "></h2></li>
-    <li><h2 th:text="'All = ' + ${all_count} "></h2></li>
+    <li><h2 th:text="'Count = ' + ${all_count} "></h2></li>
 </ul>
+</th>
 
+        <th>
+            <ul>
+                <h2>By week</h2>
+                <li><h2 th:text="'Salary = '+ ${sal} "></h2></li>
+                <li><h2 th:text="'Bonus = ' + ${bon} "></h2></li>
+                <li><h2 th:text="'Presents = ' + ${pres} "></h2></li>
+                <li><h2 th:text="'Presents = ' + ${anot} "></h2></li>
+                <li><h2 th:text="'Count = ' + ${all_count} "></h2></li>
+            </ul>
+        </th>
+        <th>
+            <ul>
+                <h2>By month</h2>
+                <li><h2 th:text="'Salary = '+ ${sal} "></h2></li>
+                <li><h2 th:text="'Bonus = ' + ${byMonth} "></h2></li>
+                <li><h2 th:text="'Presents = ' + ${pres} "></h2></li>
+                <li><h2 th:text="'Presents = ' + ${anot} "></h2></li>
+                <li><h2 th:text="'Count = ' + ${all_count} "></h2></li>
+            </ul>
+        </th>
+        <th>
+            <ul>
+                <h2>By year</h2>
+                <li><h2 th:text="'Salary = '+ ${sal} "></h2></li>
+                <li><h2 th:text="'Bonus = ' + ${bonByYear} "></h2></li>
+                <li><h2 th:text="'Presents = ' + ${pres} "></h2></li>
+                <li><h2 th:text="'Presents = ' + ${anot} "></h2></li>
+                <li><h2 th:text="'Count = ' + ${all_count} "></h2></li>
+            </ul>
+        </th>
+    </tr>
+</table>
 
-
-<a class=" py-2 text-dark" href="http://localhost:8080"><h1>Return on the main</h1></a>
+<a class=" py-2 text-dark" href="http://localhost:8080"><h1>Return to the main</h1></a>
 </body>
 
 
