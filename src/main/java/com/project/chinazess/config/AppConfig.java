@@ -1,10 +1,7 @@
 package com.project.chinazess.config;
 
-import com.project.chinazess.models.Bonus;
-import com.project.chinazess.models.Count;
-import com.project.chinazess.service.BonusService;
-import com.project.chinazess.service.CountService;
-import com.project.chinazess.service.SalaryService;
+import com.project.chinazess.models.*;
+import com.project.chinazess.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +24,9 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public CommandLineRunner demo(final CountService service, BonusService bonusService) {
+    public CommandLineRunner demo(final CountService service, BonusService bonusService,
+                                  SalaryService salaryService,
+                                  AnotherService anotherService, PresentsService presentsService) {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
@@ -36,14 +35,36 @@ public class AppConfig implements WebMvcConfigurer {
                 // count.setCount(115112L);
                 service.addCount(count);
 
-                for (int i = 0; i < 10; i++) {
+              /*  for (int i = 0; i < 10; i++) {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
                     bonus.setDate(LocalDate.of(2024, 1+i, 2+i));
                     bonusService.addBonus(bonus);
 
                 }
+                for (int i = 0; i < 10; i++) {
+                    Salary salary = new Salary(getRandomLong(),"something"+i);
+                    salary .setCount(count);
+                    salary .setDate(LocalDate.of(2024, 1+i, 2+i));
+                    salaryService.addSalary(salary);
 
+                }
+
+                for (int i = 0; i < 10; i++) {
+                    Another another = new Another(getRandomLong(),"something"+i);
+                    another.setCount(count);
+                    another.setDate(LocalDate.of(2024, 1+i, 2+i));
+                    anotherService.addAnother(another);
+
+                }
+                for (int i = 0; i < 10; i++) {
+                    Presents presents = new Presents(getRandomLong(),"something"+i);
+                    presents.setCount(count);
+                    presents.setDate(LocalDate.of(2024, 1+i, 2+i));
+                    presentsService.addPresent(presents);
+
+                }
+*/
 
             }
         };

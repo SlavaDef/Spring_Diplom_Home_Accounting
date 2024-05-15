@@ -1,5 +1,6 @@
 package com.project.chinazess.service;
 
+import com.project.chinazess.models.Another;
 import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Presents;
 import com.project.chinazess.models.Salary;
@@ -27,23 +28,29 @@ public class PresentsService {
 
     @Transactional
     public Long getPresentCount() {
-        Long count = 0L;
-        List<Presents> presents = repo.findAll();
-
-        for (Presents present : presents) {
-            count += present.getPresents();
-        }
-        return count;
+        return returnCount(repo.findAll());
     }
 
     @Transactional
-    public Long findBonusByToday() {
+    public Long findPresentsByToday() {
         LocalDate today = LocalDate.now();
         LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        return returnCount(repo.findAllByDate(test));
+    }
+    @Transactional
+    public Long findPresentsByYear() {
+        LocalDate beginYear = LocalDate.of(LocalDate.now().getYear(), 1, 1);
+        LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+        List<Presents> presents = repo.findAllByDateBetween(beginYear, endYear);
+        return returnCount(presents);
+    }
+
+
+    @Transactional
+    public Long returnCount(List<Presents> presents) {
         Long count = 0L;
-        List<Presents>  presents = repo.findAllByDate(test);
-        for (Presents pre : presents) {
-            count += pre.getPresents();
+        for (Presents pr : presents) {
+            count += pr.getPresents();
         }
         return count;
     }

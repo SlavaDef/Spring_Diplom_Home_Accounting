@@ -46,7 +46,7 @@ public class AddController {
     }
 
     @PostMapping("/add_salary")
-    public String addSalaryPost(@RequestParam Long salary, @RequestParam String description) {
+    public String addSalaryPost(@RequestParam Long salary, @RequestParam(required = false) String description) {
         Salary sal = new Salary(salary, description);
         Count count = countService.getCountById2(1L);
         sal.setCount(count);
@@ -65,7 +65,7 @@ public class AddController {
     }
 
     @PostMapping("/add_bonus")
-    public String addBonusPost(@RequestParam Long bonus, @RequestParam String description) {
+    public String addBonusPost(@RequestParam Long bonus, @RequestParam(required = false) String description) {
         Bonus bon = new Bonus(bonus, description);
         Count count = countService.getCountById(1L);
         bon.setCount(count);
@@ -81,7 +81,7 @@ public class AddController {
     }
 
     @PostMapping("/add_present")
-    public String addPresentPost(@RequestParam Long present, @RequestParam String description) {
+    public String addPresentPost(@RequestParam Long present, @RequestParam(required = false) String description) {
         Presents presents = new Presents(present, description);
         Count count = countService.getCountById(1L);
         presents.setCount(count);
@@ -97,7 +97,7 @@ public class AddController {
     }
 
     @PostMapping("/add_another")
-    public String addAnotherPost(@RequestParam Long another, @RequestParam String description) {
+    public String addAnotherPost(@RequestParam Long another, @RequestParam(required = false) String description) {
         Another a = new Another(another, description);
         Count count = countService.getCountById(1L);
         a.setCount(count);
@@ -109,13 +109,25 @@ public class AddController {
 
     @GetMapping("/all_incomes")
     public String allIncomes(Model model) {
+        model.addAttribute( "salByDay", salaryService.findSalaryByToday());
+        model.addAttribute( "bonByDay", bonusService.findBonusByToday());
+        model.addAttribute( "presByDay", presentsService.findPresentsByToday());
+        model.addAttribute( "anotByDay", anotherService.findAnotherByToday());
+        model.addAttribute( "countByDay", countService.getCountByDay());
+
         model.addAttribute( "sal", salaryService.getSalaryCount());
         model.addAttribute( "bon", bonusService.getBonusCount());
         model.addAttribute( "pres", presentsService.getPresentCount());
         model.addAttribute( "anot", anotherService.findAnotherByToday());
         model.addAttribute( "all_count", countService.getCount());
         model.addAttribute( "byMonth", bonusService.findBonusByToday());
+
         model.addAttribute( "bonByYear", bonusService.findBonusByYear());
+        model.addAttribute( "salByYear", salaryService.findSalaryByYear());
+        model.addAttribute( "presByYear", presentsService.findPresentsByYear());
+        model.addAttribute( "anotByYear", anotherService.findAnotherByYear());
+        model.addAttribute( "countByYear", countService.getCountByYear());
+
         return "all_incomes";
     }
 

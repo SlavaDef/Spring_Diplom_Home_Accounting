@@ -1,14 +1,12 @@
 package com.project.chinazess.service;
 
 import com.project.chinazess.models.Count;
-import com.project.chinazess.models.Salary;
+
 import com.project.chinazess.repo.CountRepo;
-import com.project.chinazess.repo.SalaryRepo;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -54,8 +52,16 @@ public class CountService {
     @Transactional
     public Long getCountByDay() { // return count by day from all entityes
 
-        return bonusService.findBonusByToday() + anotherService.getAnotherCount()
-                + salaryService.findBonusByToday() + presentsService.findBonusByToday();
+        return bonusService.findBonusByToday() + anotherService.findAnotherByToday()
+                + salaryService.findSalaryByToday() + presentsService.findPresentsByToday();
+
+    }
+
+    @Transactional
+    public Long getCountByYear() { // return count by year from all entityes
+
+        return bonusService.findBonusByYear()+ anotherService.findAnotherByYear()
+                + salaryService.findSalaryByYear() + presentsService.findPresentsByYear();
 
     }
 
