@@ -28,7 +28,7 @@ public class AddController {
     public String mainPage(Model model) {
         model.addAttribute( "today", countService.getCountByDay());
         model.addAttribute( "week", countService.getCount());
-        model.addAttribute( "month", bonusService.findBonusByToday());
+        model.addAttribute( "month", countService.getCountByMonth());
         model.addAttribute( "count", countService.getCount());
        // model.addAttribute( "byMonth", bonusService.findBonusByDate_Month(2));
        // model.addAttribute( "countbyid", countService.getCountById2(1L));
@@ -115,12 +115,17 @@ public class AddController {
         model.addAttribute( "anotByDay", anotherService.findAnotherByToday());
         model.addAttribute( "countByDay", countService.getCountByDay());
 
-        model.addAttribute( "sal", salaryService.getSalaryCount());
-        model.addAttribute( "bon", bonusService.getBonusCount());
-        model.addAttribute( "pres", presentsService.getPresentCount());
-        model.addAttribute( "anot", anotherService.findAnotherByToday());
-        model.addAttribute( "all_count", countService.getCount());
-        model.addAttribute( "byMonth", bonusService.findBonusByToday());
+        model.addAttribute( "salByWeek", presentsService.getPresentCount());
+        model.addAttribute( "bonByWeek", anotherService.findAnotherByToday());
+        model.addAttribute( "presByWeek", countService.getCount());
+        model.addAttribute( "anotByWeek", bonusService.findBonusByToday());
+        model.addAttribute( "countByWeek", countService.getCountByDay());
+
+        model.addAttribute( "salByMonth", salaryService.findSalaryByMonth());
+        model.addAttribute( "bonByMonth", bonusService.findBonusByMonth());
+        model.addAttribute( "presByMonth", presentsService.findPresentsByMonth());
+        model.addAttribute( "anotByMonth", anotherService.findByAnotherMonth());
+        model.addAttribute( "countByMonth", countService.getCountByMonth());
 
         model.addAttribute( "bonByYear", bonusService.findBonusByYear());
         model.addAttribute( "salByYear", salaryService.findSalaryByYear());

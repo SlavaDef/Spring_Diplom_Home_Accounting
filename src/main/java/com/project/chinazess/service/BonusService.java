@@ -17,7 +17,7 @@ public class BonusService {
 
     @Transactional
     public Bonus addBonus(Bonus bonus) {
-         bonus.setDate(LocalDate.now());
+       //  bonus.setDate(LocalDate.now());
         return repo.save(bonus);
     }
 
@@ -41,6 +41,11 @@ public class BonusService {
         LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
         List<Bonus> bonuses = repo.findAllByDateBetween(beginYear, endYear);
         return returnCount(bonuses);
+    }
+
+    @Transactional
+    public Long findBonusByMonth() {
+        return returnCount(repo.findAllDatesByMonth());
     }
 
     @Transactional

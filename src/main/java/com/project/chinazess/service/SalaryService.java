@@ -18,7 +18,7 @@ public class SalaryService {
 
     @Transactional
     public Salary addSalary(Salary salary) {
-        salary.setDate(LocalDate.now());
+      //  salary.setDate(LocalDate.now());
         return salaryRepo.save(salary);
 
     }
@@ -50,6 +50,11 @@ public class SalaryService {
         LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
         List<Salary> salaries = salaryRepo.findAllByDateBetween(beginYear, endYear);
         return returnCount(salaries);
+    }
+
+    @Transactional
+    public Long findSalaryByMonth() {
+        return returnCount(salaryRepo.findAllDatesByMonth());
     }
 
 

@@ -11,11 +11,15 @@ import java.util.List;
 @Repository
 public interface BonusRepo extends JpaRepository<Bonus, Long> {
 
-   // @Query(value = "SELECT count (c.bonus) FROM Bonus c WHERE c.date == 2024-01-02")
-  //  Long findBonusByDate();
 
     List<Bonus> findAllByDate(LocalDate date);
 
     List<Bonus> findAllByDateBetween(LocalDate date, LocalDate date2);
+
+    @Query(value = "SELECT * FROM bonus " +
+            "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
+            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH",nativeQuery = true )
+    List<Bonus> findAllDatesByMonth();
+
 
 }

@@ -1,0 +1,51 @@
+  <h2 style="color: orange">Exprenses</h2>
+    <h2>Today</h2>
+    <h2>Week</h2>
+    <h2>Month</h2>
+
+
+
+    <div style="background-color:#0095ff">
+        <h2 style="color: greenyellow">Income</h2>
+        <h2>Today</h2>
+        <h2>Week</h2>
+        <h2>Month</h2>
+    </div>
+
+
+    <h2 th:text="' Count:' + ${count} + '_UAN'" ></h2>
+
+        for (int i = 0; i < 10; i++) {
+                        Bonus bonus = new Bonus(getRandomLong(),"something"+i);
+                        bonus.setCount(count);
+                        bonus.setDate(LocalDate.of(2024, 1+i, 2+i));
+                        bonusService.addBonus(bonus);
+
+                    }
+                    for (int i = 0; i < 10; i++) {
+                        Salary salary = new Salary(getRandomLong(),"something"+i);
+                        salary .setCount(count);
+                        salary .setDate(LocalDate.of(2024, 1+i, 2+i));
+                        salaryService.addSalary(salary);
+
+                    }
+
+                    for (int i = 0; i < 10; i++) {
+                        Another another = new Another(getRandomLong(),"something"+i);
+                        another.setCount(count);
+                        another.setDate(LocalDate.of(2024, 1+i, 2+i));
+                        anotherService.addAnother(another);
+
+                    }
+                    for (int i = 0; i < 10; i++) {
+                        Presents presents = new Presents(getRandomLong(),"something"+i);
+                        presents.setCount(count);
+                        presents.setDate(LocalDate.of(2024, 1+i, 2+i));
+                        presentsService.addPresent(presents);
+
+                    }
+
+
+ @Query("select a from Article a where a.creationDateTime <= :creationDateTime")
+    List<Article> findAllWithCreationDateTimeBefore(
+      @Param("creationDateTime") Date creationDateTime);

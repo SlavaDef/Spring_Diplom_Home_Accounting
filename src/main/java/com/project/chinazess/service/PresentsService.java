@@ -20,7 +20,7 @@ public class PresentsService {
 
     @Transactional
     public Presents addPresent(Presents presents) {
-        presents.setDate(LocalDate.now());
+       // presents.setDate(LocalDate.now());
         return repo.save(presents);
 
     }
@@ -43,6 +43,11 @@ public class PresentsService {
         LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
         List<Presents> presents = repo.findAllByDateBetween(beginYear, endYear);
         return returnCount(presents);
+    }
+
+    @Transactional
+    public Long findPresentsByMonth() {
+        return returnCount(repo.findAllDatesByMonth());
     }
 
 

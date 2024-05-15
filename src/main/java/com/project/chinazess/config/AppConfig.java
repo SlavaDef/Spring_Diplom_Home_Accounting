@@ -35,7 +35,7 @@ public class AppConfig implements WebMvcConfigurer {
                 // count.setCount(115112L);
                 service.addCount(count);
 
-              /*  for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 10; i++) {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
                     bonus.setDate(LocalDate.of(2024, 1+i, 2+i));
@@ -64,7 +64,7 @@ public class AppConfig implements WebMvcConfigurer {
                     presentsService.addPresent(presents);
 
                 }
-*/
+
 
             }
         };

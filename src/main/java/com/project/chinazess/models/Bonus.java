@@ -30,8 +30,13 @@ public class Bonus {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate date;
 
+
+    //  @Basic(optional = false, fetch = FetchType.LAZY)
+ //   @Temporal(TemporalType.TIME)
+ //   private LocalTime timeEvent;
+
     @ManyToOne
-    @JoinColumn(name="count_id")
+    @JoinColumn(name = "count_id")
     private Count count;
 
     public Bonus(Long bonus, String description) {

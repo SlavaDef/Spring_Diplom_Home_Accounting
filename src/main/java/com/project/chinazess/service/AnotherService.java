@@ -17,7 +17,7 @@ public class AnotherService {
 
     @Transactional
     public Another addAnother(Another  another ) {
-        another.setDate(LocalDate.now());
+      //  another.setDate(LocalDate.now());
         return repo.save(another);
     }
 
@@ -39,6 +39,11 @@ public class AnotherService {
         LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
         List<Another> another = repo.findAllByDateBetween(beginYear, endYear);
         return returnCount(another);
+    }
+
+    @Transactional
+    public Long findByAnotherMonth() {
+        return returnCount(repo.findAllDatesByMonth());
     }
 
 

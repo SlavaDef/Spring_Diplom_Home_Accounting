@@ -1,8 +1,10 @@
 package com.project.chinazess.repo;
 
 
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Presents;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -14,5 +16,10 @@ public interface PresentsRepo extends JpaRepository<Presents, Long> {
     List<Presents> findAllByDate(LocalDate date);
 
     List<Presents> findAllByDateBetween(LocalDate date, LocalDate date2);
+
+    @Query(value = "SELECT * FROM presents " +
+            "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
+            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH",nativeQuery = true )
+    List<Presents> findAllDatesByMonth();
 
 }
