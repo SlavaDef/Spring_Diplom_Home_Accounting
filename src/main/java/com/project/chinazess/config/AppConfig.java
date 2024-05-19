@@ -38,14 +38,14 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
-                    bonus.setDate(LocalDate.of(2024, 1+i, 2+i));
+                    bonus.setDate(LocalDate.of(2024, 5, 10+i));
                     bonusService.addBonus(bonus);
 
                 }
                 for (int i = 0; i < 10; i++) {
                     Salary salary = new Salary(getRandomLong(),"something"+i);
                     salary .setCount(count);
-                    salary .setDate(LocalDate.of(2024, 1+i, 2+i));
+                    salary .setDate(LocalDate.of(2024, 1+i, 10+i));
                     salaryService.addSalary(salary);
 
                 }

@@ -7,15 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 
 
 @AllArgsConstructor
 @org.springframework.stereotype.Controller
 public class AddController {
-    private static final Logger LOGGER = LogManager.getLogger(AddController.class);
+
 
     SalaryService salaryService;
     CountService countService;
@@ -27,7 +26,8 @@ public class AddController {
     @GetMapping("/")
     public String mainPage(Model model) {
         model.addAttribute( "today", countService.getCountByDay());
-        model.addAttribute( "week", countService.getCount());
+        model.addAttribute( "week", countService.getCountByWeek());
+      //  model.addAttribute( "week", countService.getCountByMonth());
         model.addAttribute( "month", countService.getCountByMonth());
         model.addAttribute( "count", countService.getCount());
        // model.addAttribute( "byMonth", bonusService.findBonusByDate_Month(2));
@@ -115,11 +115,11 @@ public class AddController {
         model.addAttribute( "anotByDay", anotherService.findAnotherByToday());
         model.addAttribute( "countByDay", countService.getCountByDay());
 
-        model.addAttribute( "salByWeek", presentsService.getPresentCount());
-        model.addAttribute( "bonByWeek", anotherService.findAnotherByToday());
-        model.addAttribute( "presByWeek", countService.getCount());
-        model.addAttribute( "anotByWeek", bonusService.findBonusByToday());
-        model.addAttribute( "countByWeek", countService.getCountByDay());
+        model.addAttribute( "salByWeek", salaryService.findSalaryByWeek());
+        model.addAttribute( "bonByWeek", bonusService.findBonusByWeek());
+        model.addAttribute( "presByWeek", presentsService.findPresentsByWeek());
+        model.addAttribute( "anotByWeek", anotherService.findAnotherByWeek());
+        model.addAttribute( "countByWeek", countService.getCountByWeek());
 
         model.addAttribute( "salByMonth", salaryService.findSalaryByMonth());
         model.addAttribute( "bonByMonth", bonusService.findBonusByMonth());
@@ -127,8 +127,8 @@ public class AddController {
         model.addAttribute( "anotByMonth", anotherService.findByAnotherMonth());
         model.addAttribute( "countByMonth", countService.getCountByMonth());
 
-        model.addAttribute( "bonByYear", bonusService.findBonusByYear());
         model.addAttribute( "salByYear", salaryService.findSalaryByYear());
+        model.addAttribute( "bonByYear", bonusService.findBonusByYear());
         model.addAttribute( "presByYear", presentsService.findPresentsByYear());
         model.addAttribute( "anotByYear", anotherService.findAnotherByYear());
         model.addAttribute( "countByYear", countService.getCountByYear());

@@ -24,7 +24,7 @@ public class Another {
     private String description;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name="count_id")

@@ -64,13 +64,19 @@ public class CountService {
     }
 
     @Transactional
+    public Long getCountByWeek() {
+        return bonusService.findBonusByWeek() + salaryService.findSalaryByWeek() +
+                presentsService.findPresentsByWeek() + anotherService.findAnotherByWeek();
+    }
+
+
+    @Transactional
     public Long getCountByYear() { // return count by year from all entityes
 
         return bonusService.findBonusByYear() + anotherService.findAnotherByYear()
                 + salaryService.findSalaryByYear() + presentsService.findPresentsByYear();
 
     }
-
 
 
 }

@@ -1,8 +1,11 @@
 package com.project.chinazess.service;
 
+import com.project.chinazess.controller.AddController;
 import com.project.chinazess.models.Bonus;
 import com.project.chinazess.repo.BonusRepo;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 public class BonusService {
 
+   // private static final Logger LOGGER = LogManager.getLogger(AddController.class);
+
     private BonusRepo repo;
 
     @Transactional
-    public Bonus addBonus(Bonus bonus) {
+    public void addBonus(Bonus bonus) {
        //  bonus.setDate(LocalDate.now());
-        return repo.save(bonus);
+         repo.save(bonus);
     }
 
     @Transactional
@@ -36,16 +41,22 @@ public class BonusService {
     }
 
     @Transactional
+    public Long findBonusByWeek() {
+        return returnCount(repo.findAllDatesByWeek());
+    }
+
+
+    @Transactional
+    public Long findBonusByMonth() {
+        return returnCount(repo.findAllDatesByMonth());
+    }
+
+    @Transactional
     public Long findBonusByYear() {
         LocalDate beginYear = LocalDate.of(LocalDate.now().getYear(), 1, 1);
         LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
         List<Bonus> bonuses = repo.findAllByDateBetween(beginYear, endYear);
         return returnCount(bonuses);
-    }
-
-    @Transactional
-    public Long findBonusByMonth() {
-        return returnCount(repo.findAllDatesByMonth());
     }
 
     @Transactional

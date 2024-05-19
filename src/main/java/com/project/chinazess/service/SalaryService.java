@@ -4,6 +4,7 @@ import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.SalaryRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,16 +12,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class SalaryService {
 
-    private SalaryRepo salaryRepo;
+    public SalaryService(SalaryRepo salaryRepo) {
+        this.salaryRepo = salaryRepo;
+    }
+
+    private final SalaryRepo salaryRepo;
 
     @Transactional
-    public Salary addSalary(Salary salary) {
-      //  salary.setDate(LocalDate.now());
-        return salaryRepo.save(salary);
-
+    public void addSalary(Salary salary) {
+       // salary.setDate(LocalDate.now());
+         salaryRepo.save(salary);
     }
 
 
@@ -43,6 +47,11 @@ public class SalaryService {
         List<Salary>  salaries = salaryRepo.findAllByDate(test);
 
         return returnCount(salaries);
+    }
+
+    @Transactional
+    public Long findSalaryByWeek() {
+        return returnCount(salaryRepo.findAllDatesByWeek());
     }
     @Transactional
     public Long findSalaryByYear() {

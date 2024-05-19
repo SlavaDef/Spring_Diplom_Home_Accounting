@@ -49,3 +49,18 @@
  @Query("select a from Article a where a.creationDateTime <= :creationDateTime")
     List<Article> findAllWithCreationDateTimeBefore(
       @Param("creationDateTime") Date creationDateTime);
+
+      SELECT CURDATE() - INTERVAL CASE WHEN DAYOFWEEK(CURDATE()) = 1 THEN 13 ELSE DAYOFWEEK(CURDATE()) + 5 END DAY -- start of the previous week
+      SELECT CURDATE() - INTERVAL CASE WHEN DAYOFWEEK(CURDATE()) = 1 THEN 6 ELSE DAYOFWEEK(CURDATE()) - 1 END DAY -- end of the previous week
+
+
+       /*   @Query(value = "SELECT * FROM bonus " +
+                  "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
+                  "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 2 WEEK", nativeQuery = true)
+          List<Bonus> findAllDatesByWeek(); */
+
+         // @Query(value = "SELECT * FROM count.bonus WHERE DATE BETWEEN CURRENT_DATE() – INTERVAL 7 DAY AND CURRENT_DATE()", nativeQuery = true)
+         //  List<Bonus> findAllDatesByWeek();
+
+         // @Query(value = "SELECT CURDATE() – INTERVAL 7 DAY", nativeQuery = true)
+         // List<Bonus> findAllDatesByWeek();

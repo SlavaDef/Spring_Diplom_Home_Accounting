@@ -16,9 +16,9 @@ public class AnotherService {
     private AnotherRepo repo;
 
     @Transactional
-    public Another addAnother(Another  another ) {
+    public void addAnother(Another  another ) {
       //  another.setDate(LocalDate.now());
-        return repo.save(another);
+         repo.save(another);
     }
 
     @Transactional
@@ -31,6 +31,11 @@ public class AnotherService {
         LocalDate today = LocalDate.now();
         LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
         return returnCount(repo.findAllByDate(test));
+    }
+
+    @Transactional
+    public Long findAnotherByWeek() {
+        return returnCount(repo.findAllDatesByWeek());
     }
 
     @Transactional

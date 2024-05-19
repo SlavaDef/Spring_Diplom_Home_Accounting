@@ -16,8 +16,12 @@ public interface SalaryRepo extends JpaRepository<Salary, Long> {
 
     List<Salary> findAllByDateBetween(LocalDate date, LocalDate date2);
 
-    @Query(value = "SELECT * FROM salary " +
+    @Query(value = "SELECT * FROM count.salary " +
             "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
-            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH",nativeQuery = true )
+            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH", nativeQuery = true)
     List<Salary> findAllDatesByMonth();
+
+    @Query(value = "SELECT * FROM salary WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
+    List<Salary> findAllDatesByWeek();
+
 }
