@@ -23,17 +23,7 @@ public class AddController {
     AnotherService anotherService;
 
 
-    @GetMapping("/")
-    public String mainPage(Model model) {
-        model.addAttribute( "today", countService.getCountByDay());
-        model.addAttribute( "week", countService.getCountByWeek());
-      //  model.addAttribute( "week", countService.getCountByMonth());
-        model.addAttribute( "month", countService.getCountByMonth());
-        model.addAttribute( "count", countService.getCount());
-       // model.addAttribute( "byMonth", bonusService.findBonusByDate_Month(2));
-       // model.addAttribute( "countbyid", countService.getCountById2(1L));
-        return "index";
-    }
+
 
     @GetMapping("/add")
     public String add() {
@@ -107,34 +97,7 @@ public class AddController {
 
     }
 
-    @GetMapping("/all_incomes")
-    public String allIncomes(Model model) {
-        model.addAttribute( "salByDay", salaryService.findSalaryByToday());
-        model.addAttribute( "bonByDay", bonusService.findBonusByToday());
-        model.addAttribute( "presByDay", presentsService.findPresentsByToday());
-        model.addAttribute( "anotByDay", anotherService.findAnotherByToday());
-        model.addAttribute( "countByDay", countService.getCountByDay());
 
-        model.addAttribute( "salByWeek", salaryService.findSalaryByWeek());
-        model.addAttribute( "bonByWeek", bonusService.findBonusByWeek());
-        model.addAttribute( "presByWeek", presentsService.findPresentsByWeek());
-        model.addAttribute( "anotByWeek", anotherService.findAnotherByWeek());
-        model.addAttribute( "countByWeek", countService.getCountByWeek());
-
-        model.addAttribute( "salByMonth", salaryService.findSalaryByMonth());
-        model.addAttribute( "bonByMonth", bonusService.findBonusByMonth());
-        model.addAttribute( "presByMonth", presentsService.findPresentsByMonth());
-        model.addAttribute( "anotByMonth", anotherService.findByAnotherMonth());
-        model.addAttribute( "countByMonth", countService.getCountByMonth());
-
-        model.addAttribute( "salByYear", salaryService.findSalaryByYear());
-        model.addAttribute( "bonByYear", bonusService.findBonusByYear());
-        model.addAttribute( "presByYear", presentsService.findPresentsByYear());
-        model.addAttribute( "anotByYear", anotherService.findAnotherByYear());
-        model.addAttribute( "countByYear", countService.getCountByYear());
-
-        return "all_incomes";
-    }
 
 
 

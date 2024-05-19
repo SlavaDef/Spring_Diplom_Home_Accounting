@@ -1,8 +1,6 @@
 package com.project.chinazess.repo;
 
 import com.project.chinazess.models.Another;
-import com.project.chinazess.models.Bonus;
-import com.project.chinazess.models.Salary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

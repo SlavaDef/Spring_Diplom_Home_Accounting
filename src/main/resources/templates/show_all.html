@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AllByDay</title>
+</head>
+<style>
+    #example1 {
+        border: 10px solid #006fff;
+        padding: 10px;
+        border-radius: 25px;
+        width: 900px;
+        height: 1500px;
+        position: absolute;
+        top: 5%;
+        left: 20%;
+    }
+
+    body {
+        background-image: url('../static/ocean.png');
+        background-size: cover;
+    }
+</style>
+<body>
+
+<div id="example1"  style="background-color:#ffdd00" class="container mt-5">
+
+    <div th:each="el : ${dayList}" class="alert alert-info mt-2">
+        <h1 th:text="'Bonus = ' + ${el.getBonus}"></h1>
+        <h2 th:text="${el.getDescription()}"></h2>
+        <h3 th:text="${el.getDate}"/>
+
+
+        <!-- силка/кнопка на note + елемент id для кожної запісі своя силка -->
+        <a th:href="'/edit/'+ ${el.getId()}" class="btn btn-warning">Edit</a> <br><br>
+
+        <!--додаємо форму для видалення, для кнопки -->
+
+        <form th:action="'/remi/delete'" method="post" >
+            <input type="hidden" name="id" th:value="${el.getId()}">
+            <button type="submit" class="btn btn-success">Delete</button>
+        </form>
+        <hr>
+    </div>
+</div>
+
+</body>
+</html>

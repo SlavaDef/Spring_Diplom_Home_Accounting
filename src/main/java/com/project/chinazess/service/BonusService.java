@@ -60,6 +60,13 @@ public class BonusService {
     }
 
     @Transactional
+    public List<Bonus> findAllBonusesByToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        return repo.findAllByDate(test);
+    }
+
+    @Transactional
     public Long returnCount(List<Bonus> bonuses) {
         Long count = 0L;
         for (Bonus bonus : bonuses) {

@@ -1,7 +1,6 @@
 package com.project.chinazess.repo;
 
 import com.project.chinazess.models.Bonus;
-import com.project.chinazess.models.Salary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,8 +23,6 @@ public interface BonusRepo extends JpaRepository<Bonus, Long> {
 
     @Query(value = "SELECT * FROM bonus WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     List<Bonus> findAllDatesByWeek();
-
-
 
 
 }
