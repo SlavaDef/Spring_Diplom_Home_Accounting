@@ -38,7 +38,7 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
-                    bonus.setDate(LocalDate.of(2024, 5, 10+i));
+                    bonus.setDate(LocalDate.of(2024, 5, 12+i));
                     bonusService.addBonus(bonus);
 
                 }

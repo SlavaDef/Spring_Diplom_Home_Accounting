@@ -5,10 +5,9 @@ import com.project.chinazess.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 
 @AllArgsConstructor
@@ -23,16 +22,14 @@ public class AddController {
     AnotherService anotherService;
 
 
-
-
     @GetMapping("/add")
     public String add() {
-        return "add";
+        return "add/add";
     }
 
     @GetMapping("/add_salary")
     public String addSalary() {
-        return "add_salary";
+        return "add/add_salary";
     }
 
     @PostMapping("/add_salary")
@@ -42,8 +39,8 @@ public class AddController {
         sal.setCount(count);
         salaryService.addSalary(sal);
 
-      //  count.setSalaries(salaryService.getAllSalaries());
-      //  countService.updateCount(count);
+        //  count.setSalaries(salaryService.getAllSalaries());
+        //  countService.updateCount(count);
 
         return "redirect:/";
 
@@ -51,7 +48,7 @@ public class AddController {
 
     @GetMapping("/add_bonus")
     public String addBonus() {
-        return "add_bonus";
+        return "add/add_bonus";
     }
 
     @PostMapping("/add_bonus")
@@ -67,7 +64,7 @@ public class AddController {
 
     @GetMapping("/add_present")
     public String addPresent() {
-        return "add_presents";
+        return "add/add_presents";
     }
 
     @PostMapping("/add_present")
@@ -83,7 +80,7 @@ public class AddController {
 
     @GetMapping("/add_another")
     public String addAnotherPresent() {
-        return "add_another";
+        return "add/add_another";
     }
 
     @PostMapping("/add_another")
@@ -97,8 +94,32 @@ public class AddController {
 
     }
 
+    @PostMapping("/deleteBonus")
+    public String deleteBonus(Long id) {
+        bonusService.deleteBonus(bonusService.getBonusById(id));
+        return "redirect:/allBonusesByDay";
+    }
 
+    @GetMapping("/editBonus/{id}") // гет шаблон для редагування
+    public String RemiEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (bonusService.getBonusById(id) == null) {
+            return "redirect:/allBonusesByDay";
+        }
+        model.addAttribute("dayList", bonusService.getBonusById(id));
 
+        return "edit/bonus_edit";
+    }
+
+    @PostMapping("/editBonus") // post релізація
+    public String bonusUpdate(Long id, @RequestParam Long bonus,
+                             @RequestParam String description) {
+
+        Bonus bon = bonusService.getBonusById(id);
+        bon.setBonus(bonus);
+        bon.setDescription(description);
+        bonusService.updateBonus(bon);
+        return "redirect:/allBonusesByDay";
+    }
 
 
 }

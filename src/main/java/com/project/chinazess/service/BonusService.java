@@ -67,6 +67,23 @@ public class BonusService {
     }
 
     @Transactional
+    public void deleteBonus(Bonus bonus){
+        repo.delete(bonus);
+    }
+
+    @Transactional
+    public Bonus getBonusById(Long id){
+        return repo.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public void updateBonus(Bonus bonus) {
+        repo.save(bonus);
+    }
+
+
+
+    @Transactional
     public Long returnCount(List<Bonus> bonuses) {
         Long count = 0L;
         for (Bonus bonus : bonuses) {

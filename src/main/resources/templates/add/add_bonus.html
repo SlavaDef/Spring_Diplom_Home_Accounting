@@ -5,9 +5,10 @@
     <title>Ending new Income</title>
     <style>
         body {
-            background-image: url('../static/south.png');
+            background-image: url('../../static/south.png');
             background-size: cover;
         }
+
         a:link {
             color: green;
             background-color: transparent;
@@ -35,7 +36,6 @@
     </style>
 </head>
 <body>
-
 <div id="example1"  style="background-color:#ffdd00">
 <a class=" py-2 text-dark" href="http://localhost:8080/add"><h2>< Back</h2></a>
 <h1>Incoming</h1>
@@ -46,14 +46,15 @@
 <br>
 <br>
 <hr>
-<h2>Ending Salary</h2>
+<h2>Ending bonus</h2>
+
 <br>
 <hr>
 <div class="container mt-5 mb-5">
-    <form action="/add_salary" method="post">
-        <input type="text" name="salary" placeholder="salary" class="form-control"><br><br>
+    <form action="/add_bonus" method="post">
+        <input type="text" name="bonus" placeholder="bonus" class="form-control"><br><br>
         <input type="text" name="description" placeholder="add description" class="form-control"><br><br>
-        <button type="submit" class="btn btn-success">Add salary</button>
+        <button type="submit" class="btn btn-success">Add bonus</button> <!-- при натисканні данні будуть відправлятися на сервер-->
     </form>
 
 </div>
