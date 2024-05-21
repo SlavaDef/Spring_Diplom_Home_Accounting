@@ -56,12 +56,33 @@ public class ShowController {
         return "all/all_incomes";
     }
 
+    @GetMapping("/add")
+    public String add() {
+        return "add/add";
+    }
+
     @GetMapping("/allBonusesByDay")
     public String allBonusByDay(Model model) {
 
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("dayList", bonusService.findAllBonusesByToday());
         return "all/all_bonuses";
+    }
+
+    @GetMapping("/allAnotherByDay")
+    public String allAnotherByDay(Model model) {
+
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", anotherService.findAllAnothersByToday());
+        return "all/all_another";
+    }
+
+    @GetMapping("/allSalaryByDay")
+    public String allSalaryByDay(Model model) {
+
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", salaryService.findAllSalaryByToday());
+        return "all/all_salary";
     }
 
 }

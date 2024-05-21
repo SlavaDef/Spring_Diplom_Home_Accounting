@@ -53,6 +53,13 @@ public class SalaryService {
     public Long findSalaryByWeek() {
         return returnCount(salaryRepo.findAllDatesByWeek());
     }
+
+    @Transactional
+    public Long findSalaryByMonth() {
+        return returnCount(salaryRepo.findAllDatesByMonth());
+    }
+
+
     @Transactional
     public Long findSalaryByYear() {
         LocalDate beginYear = LocalDate.of(LocalDate.now().getYear(), 1, 1);
@@ -62,8 +69,25 @@ public class SalaryService {
     }
 
     @Transactional
-    public Long findSalaryByMonth() {
-        return returnCount(salaryRepo.findAllDatesByMonth());
+    public List<Salary> findAllSalaryByToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        return salaryRepo.findAllByDate(test);
+    }
+
+    @Transactional
+    public void deleteSalary(Salary salary){
+        salaryRepo.delete(salary);
+    }
+
+    @Transactional
+    public Salary getSalaryById(Long id){
+        return salaryRepo.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public void updateSalary(Salary salary) {
+        salaryRepo.save(salary);
     }
 
 

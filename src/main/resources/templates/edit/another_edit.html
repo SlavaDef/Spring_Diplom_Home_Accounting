@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update_Bonus</title>
+    <title>Update_Another</title>
 </head>
 <style>
     #example1 {
@@ -36,9 +36,9 @@
 
         <!--Форма оновлення-->
 
-        <form th:action='@{/editBonus(id=${el.getId()})}' method="post">
+        <form th:action='@{/editAnother(id=${el.getId()})}' method="post">
             <hr>
-            <input type="number" th:value="${el.getBonus()}" name="bonus" placeholder="add new bonus"
+            <input type="number" th:value="${el.getAnother}" name="another" placeholder="add new sum"
                    class="form-control"> <br>
             <hr>
             <input type="text" th:value="${el.getDescription()}" name="description" placeholder="add new description"

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AllBonusByDay</title>
+    <title>AllSalaryByDay</title>
 </head>
 <style>
     #example1 {
@@ -35,17 +35,16 @@
     <div th:each="el : ${dayList}" class="alert alert-info mt-2">
 
 
-        <h1 th:text="'Bonus = ' + ${el.getBonus()}"></h1>
+        <h1 th:text="'Salary = ' + ${el.getSalary()}"></h1>
         <h2 th:text="${el.getDescription()}"></h2>
-       <!-- <h3 th:text="${el.getDate}"></h3> -->
 
 
         <!-- силка/кнопка на note + елемент id для кожної запісі своя силка -->
-        <a th:href="'/editBonus/'+ ${el.getId()}" class="btn btn-warning">Edit</a> <br><br>
+        <a th:href="'/editSalary/'+ ${el.getId()}" class="btn btn-warning">Edit</a> <br><br>
 
         <!--додаємо форму для видалення, для кнопки -->
 
-        <form th:action="'/deleteBonus'" method="post" >
+        <form th:action="'/deleteSalary'" method="post" >
             <input type="hidden" name="id" th:value="${el.getId()}">
             <button type="submit" class="btn btn-success">Delete</button>
         </form>

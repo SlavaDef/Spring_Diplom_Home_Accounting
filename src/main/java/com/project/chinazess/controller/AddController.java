@@ -22,29 +22,6 @@ public class AddController {
     AnotherService anotherService;
 
 
-    @GetMapping("/add")
-    public String add() {
-        return "add/add";
-    }
-
-    @GetMapping("/add_salary")
-    public String addSalary() {
-        return "add/add_salary";
-    }
-
-    @PostMapping("/add_salary")
-    public String addSalaryPost(@RequestParam Long salary, @RequestParam(required = false) String description) {
-        Salary sal = new Salary(salary, description);
-        Count count = countService.getCountById2(1L);
-        sal.setCount(count);
-        salaryService.addSalary(sal);
-
-        //  count.setSalaries(salaryService.getAllSalaries());
-        //  countService.updateCount(count);
-
-        return "redirect:/";
-
-    }
 
     @GetMapping("/add_bonus")
     public String addBonus() {
@@ -78,22 +55,6 @@ public class AddController {
 
     }
 
-    @GetMapping("/add_another")
-    public String addAnotherPresent() {
-        return "add/add_another";
-    }
-
-    @PostMapping("/add_another")
-    public String addAnotherPost(@RequestParam Long another, @RequestParam(required = false) String description) {
-        Another a = new Another(another, description);
-        Count count = countService.getCountById(1L);
-        a.setCount(count);
-        anotherService.addAnother(a);
-
-        return "redirect:/";
-
-    }
-
     @PostMapping("/deleteBonus")
     public String deleteBonus(Long id) {
         bonusService.deleteBonus(bonusService.getBonusById(id));
@@ -101,7 +62,7 @@ public class AddController {
     }
 
     @GetMapping("/editBonus/{id}") // гет шаблон для редагування
-    public String RemiEdit(@PathVariable(value = "id") Long id, Model model) {
+    public String bonusEdit(@PathVariable(value = "id") Long id, Model model) {
         if (bonusService.getBonusById(id) == null) {
             return "redirect:/allBonusesByDay";
         }

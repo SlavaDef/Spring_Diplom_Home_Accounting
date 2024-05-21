@@ -45,7 +45,7 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Salary salary = new Salary(getRandomLong(),"something"+i);
                     salary .setCount(count);
-                    salary .setDate(LocalDate.of(2024, 1+i, 10+i));
+                    salary .setDate(LocalDate.of(2024, 5, 21));
                     salaryService.addSalary(salary);
 
                 }
@@ -53,7 +53,7 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Another another = new Another(getRandomLong(),"something"+i);
                     another.setCount(count);
-                    another.setDate(LocalDate.of(2024, 1+i, 2+i));
+                    another.setDate(LocalDate.of(2024, 5, 21));
                     anotherService.addAnother(another);
 
                 }

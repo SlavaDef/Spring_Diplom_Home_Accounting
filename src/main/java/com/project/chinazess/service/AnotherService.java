@@ -1,6 +1,7 @@
 package com.project.chinazess.service;
 
 import com.project.chinazess.models.Another;
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.repo.AnotherRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class AnotherService {
     }
 
     @Transactional
+    public Long findByAnotherMonth() {
+        return returnCount(repo.findAllDatesByMonth());
+    }
+
+    @Transactional
     public Long findAnotherByYear() {
         LocalDate beginYear = LocalDate.of(LocalDate.now().getYear(), 1, 1);
         LocalDate endYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
@@ -46,9 +52,28 @@ public class AnotherService {
         return returnCount(another);
     }
 
+
+
     @Transactional
-    public Long findByAnotherMonth() {
-        return returnCount(repo.findAllDatesByMonth());
+    public List<Another> findAllAnothersByToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        return repo.findAllByDate(test);
+    }
+
+    @Transactional
+    public void deleteAnother(Another another){
+        repo.delete(another);
+    }
+
+    @Transactional
+    public Another getAnotherById(Long id){
+        return repo.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public void updateBonus(Another another) {
+        repo.save(another);
     }
 
 
