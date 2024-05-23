@@ -9,19 +9,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+
 
 @AllArgsConstructor
 @org.springframework.stereotype.Controller
-public class AddController {
+public class BonusController {
 
-
-    SalaryService salaryService;
     CountService countService;
     BonusService bonusService;
-    PresentsService presentsService;
-    AnotherService anotherService;
 
+    @GetMapping("/allBonusesByDay")
+    public String allBonusByDay(Model model) {
 
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", bonusService.findAllBonusesByToday());
+        return "all/all_bonuses";
+    }
 
     @GetMapping("/add_bonus")
     public String addBonus() {
@@ -34,22 +38,6 @@ public class AddController {
         Count count = countService.getCountById(1L);
         bon.setCount(count);
         bonusService.addBonus(bon);
-
-        return "redirect:/";
-
-    }
-
-    @GetMapping("/add_present")
-    public String addPresent() {
-        return "add/add_presents";
-    }
-
-    @PostMapping("/add_present")
-    public String addPresentPost(@RequestParam Long present, @RequestParam(required = false) String description) {
-        Presents presents = new Presents(present, description);
-        Count count = countService.getCountById(1L);
-        presents.setCount(count);
-        presentsService.addPresent(presents);
 
         return "redirect:/";
 

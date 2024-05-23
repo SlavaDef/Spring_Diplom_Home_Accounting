@@ -21,34 +21,50 @@
         background-size: cover;
     }
 
-    h1,h2 {
+    h2 {
         font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+        color: blue;
     }
+
+    h1, h5 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+
+    }
+
 </style>
 
 <body>
 <a class=" py-2 text-dark" href="http://localhost:8080/all_incomes"><h2>< Back</h2></a>
 
-<div id="example1"  style="background-color:#ffdd00" class="container mt-5">
-    <h2 th:text=" ${date}"></h2>
+<div id="example1" style="background-color:#ffdd00" class="container mt-5">
+    <h1 th:text=" ${date}"></h1>
     <hr>
+
+
     <div th:each="el : ${dayList}" class="alert alert-info mt-2">
 
 
-        <h1 th:text="'Bonus = ' + ${el.getBonus()}"></h1>
-        <h2 th:text="${el.getDescription()}"></h2>
-       <!-- <h3 th:text="${el.getDate}"></h3> -->
+        <h2 th:text="'Bonus = ' + ${el.getBonus()} +' uan'"></h2>
+        <h5 th:text="${el.getDescription()}"></h5>
 
+        <table class="table table-striped">
 
-        <!-- силка/кнопка на note + елемент id для кожної запісі своя силка -->
-        <a th:href="'/editBonus/'+ ${el.getId()}" class="btn btn-warning">Edit</a> <br><br>
+            <tr>
 
-        <!--додаємо форму для видалення, для кнопки -->
+                <th><a th:href="'/editBonus/'+ ${el.getId()}" class="btn btn-warning">Edit</a></th>
 
-        <form th:action="'/deleteBonus'" method="post" >
-            <input type="hidden" name="id" th:value="${el.getId()}">
-            <button type="submit" class="btn btn-success">Delete</button>
-        </form>
+                <th></th>
+                <th></th>
+
+                <th>
+                    <form th:action="'/deleteBonus'" method="post">
+                        <input type="hidden" name="id" th:value="${el.getId()}">
+                        <button type="submit" class="btn btn-success">Delete</button>
+                    </form>
+                </th>
+
+            </tr>
+        </table>
         <hr>
     </div>
 </div>

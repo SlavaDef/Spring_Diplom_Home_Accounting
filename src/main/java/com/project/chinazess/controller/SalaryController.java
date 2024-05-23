@@ -13,12 +13,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+
 @Controller
 @AllArgsConstructor
 public class SalaryController {
 
     private SalaryService salaryService;
     private CountService countService;
+
+
+    @GetMapping("/allSalaryByDay")
+    public String allSalaryByDay(Model model) {
+
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", salaryService.findAllSalaryByToday());
+        return "all/all_salary";
+    }
 
     @GetMapping("/add_salary")
     public String addSalary() {

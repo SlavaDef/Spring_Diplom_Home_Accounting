@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+
 @Controller
 @AllArgsConstructor
 public class AnotherController {
@@ -19,6 +21,14 @@ public class AnotherController {
 
    private AnotherService anotherService;
    private CountService countService;
+
+    @GetMapping("/allAnotherByDay")
+    public String allAnotherByDay(Model model) {
+
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", anotherService.findAllAnothersByToday());
+        return "all/all_another";
+    }
 
     @GetMapping("/add_another")
     public String addAnotherPresent() {

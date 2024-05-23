@@ -20,8 +20,8 @@ public class PresentsService {
 
     @Transactional
     public void addPresent(Presents presents) {
-      //  presents.setDate(LocalDate.now());
-         repo.save(presents);
+        //  presents.setDate(LocalDate.now());
+        repo.save(presents);
 
     }
 
@@ -42,6 +42,12 @@ public class PresentsService {
     public Long findPresentsByWeek() {
         return returnCount(repo.findAllDatesByWeek());
     }
+
+    @Transactional
+    public Long findPresentsByMonth() {
+        return returnCount(repo.findAllDatesByMonth());
+    }
+
     @Transactional
     public Long findPresentsByYear() {
         LocalDate beginYear = LocalDate.of(LocalDate.now().getYear(), 1, 1);
@@ -51,8 +57,26 @@ public class PresentsService {
     }
 
     @Transactional
-    public Long findPresentsByMonth() {
-        return returnCount(repo.findAllDatesByMonth());
+    public List<Presents> findAllPresentsByToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        return repo.findAllByDate(test);
+    }
+
+
+    @Transactional
+    public void deletePresent(Presents present) {
+        repo.delete(present);
+    }
+
+    @Transactional
+    public Presents getPresentById(Long id) {
+        return repo.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public void updatePresent(Presents present) {
+        repo.save(present);
     }
 
 

@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static com.project.chinazess.Util.getRandomLong;
 
@@ -38,14 +37,14 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
-                    bonus.setDate(LocalDate.of(2024, 5, 12+i));
+                    bonus.setDate(LocalDate.of(2024, 5, 23));
                     bonusService.addBonus(bonus);
 
                 }
                 for (int i = 0; i < 10; i++) {
                     Salary salary = new Salary(getRandomLong(),"something"+i);
                     salary .setCount(count);
-                    salary .setDate(LocalDate.of(2024, 5, 21));
+                    salary .setDate(LocalDate.of(2024, 5, 23));
                     salaryService.addSalary(salary);
 
                 }
@@ -53,14 +52,14 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Another another = new Another(getRandomLong(),"something"+i);
                     another.setCount(count);
-                    another.setDate(LocalDate.of(2024, 5, 21));
+                    another.setDate(LocalDate.of(2024, 5, 23));
                     anotherService.addAnother(another);
 
                 }
                 for (int i = 0; i < 10; i++) {
                     Presents presents = new Presents(getRandomLong(),"something"+i);
                     presents.setCount(count);
-                    presents.setDate(LocalDate.of(2024, 1+i, 2+i));
+                    presents.setDate(LocalDate.of(2024, 5, 23));
                     presentsService.addPresent(presents);
 
                 }

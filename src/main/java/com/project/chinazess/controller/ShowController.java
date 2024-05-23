@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Controller
@@ -61,28 +60,8 @@ public class ShowController {
         return "add/add";
     }
 
-    @GetMapping("/allBonusesByDay")
-    public String allBonusByDay(Model model) {
 
-        model.addAttribute("date", LocalDate.now());
-        model.addAttribute("dayList", bonusService.findAllBonusesByToday());
-        return "all/all_bonuses";
-    }
 
-    @GetMapping("/allAnotherByDay")
-    public String allAnotherByDay(Model model) {
 
-        model.addAttribute("date", LocalDate.now());
-        model.addAttribute("dayList", anotherService.findAllAnothersByToday());
-        return "all/all_another";
-    }
-
-    @GetMapping("/allSalaryByDay")
-    public String allSalaryByDay(Model model) {
-
-        model.addAttribute("date", LocalDate.now());
-        model.addAttribute("dayList", salaryService.findAllSalaryByToday());
-        return "all/all_salary";
-    }
 
 }

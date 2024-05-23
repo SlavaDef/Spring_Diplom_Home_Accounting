@@ -1,11 +1,8 @@
 package com.project.chinazess.service;
 
-import com.project.chinazess.controller.AddController;
 import com.project.chinazess.models.Bonus;
 import com.project.chinazess.repo.BonusRepo;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
