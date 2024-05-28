@@ -10,11 +10,27 @@
         padding: 10px;
         border-radius: 25px;
         width: 900px;
-        height: 1500px;
+        height: 1150px;
         position: absolute;
         top: 5%;
         left: 20%;
     }
+
+    .button5 {
+        border-radius: 12px;
+        background-color: greenyellow;
+    }
+
+    a:link {
+        color: green;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    .center {
+        text-align: center;
+    }
+
 
     body {
         background-image: url('../../static/ocean.png');
@@ -31,10 +47,34 @@
 
     }
 
+    .pagination {
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: blue;
+    }
+
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: green;
+        border: 1px solid #4CAF50;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: cadetblue;
+    }
+
+
 </style>
 
 <body>
-<a class=" py-2 text-dark" href="http://localhost:8080/all_incomes"><h2>< Back</h2></a>
+<a class="py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
 
 <div id="example1" style="background-color:#ffdd00" class="container mt-5">
     <h1 th:text=" ${date}"></h1>
@@ -51,7 +91,7 @@
 
             <tr>
 
-                <th><a th:href="'/editBonus/'+ ${el.getId()}" class="btn btn-warning">Edit</a></th>
+                <th><a th:href="'/editBonus/'+ ${el.getId()}" class="button5">Edit</a></th>
 
                 <th></th>
                 <th></th>
@@ -59,7 +99,7 @@
                 <th>
                     <form th:action="'/deleteBonus'" method="post">
                         <input type="hidden" name="id" th:value="${el.getId()}">
-                        <button type="submit" class="btn btn-success">Delete</button>
+                        <button type="submit" class="button5">Delete</button>
                     </form>
                 </th>
 
@@ -67,7 +107,14 @@
         </table>
         <hr>
     </div>
-</div>
 
+    <div class="center">
+        <div th:each="el : ${count}" class="pagination">
+            <a th:href="'/allBonusesByDay?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
+
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

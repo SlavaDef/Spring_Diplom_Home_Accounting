@@ -1,10 +1,10 @@
 package com.project.chinazess.service;
 
-import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.SalaryRepo;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,26 +12,23 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-//@AllArgsConstructor
+@AllArgsConstructor
 public class SalaryService {
 
-    public SalaryService(SalaryRepo salaryRepo) {
-        this.salaryRepo = salaryRepo;
-    }
 
     private final SalaryRepo salaryRepo;
 
     @Transactional
     public void addSalary(Salary salary) {
-       // salary.setDate(LocalDate.now());
-         salaryRepo.save(salary);
+        // salary.setDate(LocalDate.now());
+        salaryRepo.save(salary);
     }
 
 
     @Transactional
     public Long getSalaryCount() {
-       // Long count = 0L;
-       // List<Salary> salaries = salaryRepo.findAll();
+        // Long count = 0L;
+        // List<Salary> salaries = salaryRepo.findAll();
         return returnCount(salaryRepo.findAll());
     }
 
@@ -44,7 +41,7 @@ public class SalaryService {
     public Long findSalaryByToday() {
         LocalDate today = LocalDate.now();
         LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
-        List<Salary>  salaries = salaryRepo.findAllByDate(test);
+        List<Salary> salaries = salaryRepo.findAllByDate(test);
 
         return returnCount(salaries);
     }
@@ -68,26 +65,41 @@ public class SalaryService {
         return returnCount(salaries);
     }
 
-    @Transactional
+  /*  @Transactional
     public List<Salary> findAllSalaryByToday() {
         LocalDate today = LocalDate.now();
         LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
         return salaryRepo.findAllByDate(test);
-    }
+    } */
 
     @Transactional
-    public void deleteSalary(Salary salary){
+    public void deleteSalary(Salary salary) {
         salaryRepo.delete(salary);
     }
 
     @Transactional
-    public Salary getSalaryById(Long id){
+    public Salary getSalaryById(Long id) {
         return salaryRepo.findById(id).orElseThrow();
     }
 
     @Transactional
     public void updateSalary(Salary salary) {
         salaryRepo.save(salary);
+    }
+
+    @Transactional(readOnly = true)
+    public long count() {
+        return salaryRepo.count();
+    }
+
+    @Transactional
+    public List<Salary> allPageableSalaryByDate(LocalDate date, Pageable pageable) {
+        Page<Salary> page = date == null
+
+                ? salaryRepo.findAll(pageable)
+                : salaryRepo.findAllByDate(date, pageable);
+
+        return page.getContent();
     }
 
 

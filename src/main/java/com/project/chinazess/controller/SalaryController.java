@@ -1,11 +1,13 @@
 package com.project.chinazess.controller;
 
 import com.project.chinazess.models.Another;
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Count;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.service.CountService;
 import com.project.chinazess.service.SalaryService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -23,11 +27,11 @@ public class SalaryController {
     private CountService countService;
 
 
-    @GetMapping("/allSalaryByDay")
+    //   @GetMapping("/allSalaryByDay")
     public String allSalaryByDay(Model model) {
 
         model.addAttribute("date", LocalDate.now());
-        model.addAttribute("dayList", salaryService.findAllSalaryByToday());
+     //   model.addAttribute("dayList", salaryService.findAllSalaryByToday());
         return "all/all_salary";
     }
 
@@ -73,5 +77,33 @@ public class SalaryController {
         sal.setDescription(description);
         salaryService.updateSalary(sal);
         return "redirect:/allSalaryByDay";
+    }
+
+    @GetMapping("/allSalaryByDay")
+    public String getAllSalaryWithPageable(
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+        date = LocalDate.now();
+        LocalDate test = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        List<Salary> salaryList = salaryService.allPageableSalaryByDate(
+                test, PageRequest.of(page, limit));
+
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", salaryList);
+        model.addAttribute("count", getListOfSalaryPages());
+        return "all/all_salary";
+    }
+
+
+    private List<Integer> getListOfSalaryPages() {
+        long totalCount = salaryService.count();
+        long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
+        List<Integer> numb = new ArrayList<>();
+        for (int i = 0; i < res; i++) {
+            numb.add(i);
+        }
+        return numb;
     }
 }

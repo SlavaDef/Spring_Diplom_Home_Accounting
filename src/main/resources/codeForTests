@@ -64,3 +64,28 @@
 
          // @Query(value = "SELECT CURDATE() – INTERVAL 7 DAY", nativeQuery = true)
          // List<Bonus> findAllDatesByWeek();
+
+
+          /*   @GetMapping("/allBonusesByDay")
+             public String allBonusByDay(Model model,
+                                         @RequestParam(required = false, defaultValue = "0") Integer page) {
+                 if (page < 0) page = 0;
+                 List<Bonus> bonusList = bonusService.findAll(PageRequest.of(page,
+                         6, Sort.Direction.DESC, "id"));
+
+                 model.addAttribute("date", LocalDate.now());
+                 model.addAttribute("dayList", bonusList);
+                 model.addAttribute("allPages", getPageCount());
+                 return "all/all_bonuses";
+             } */
+
+              /*  @GetMapping("/allBonusesByDay")
+                 public String allBonusByDay(Model model) {
+
+                     model.addAttribute("date", LocalDate.now());
+                     model.addAttribute("dayList", bonusService.findAllBonusesByToday());
+                     return "all/all_bonuses";
+                 } */
+
+
+                 <div th:each="el,iter : ${dayList}"  th:class="${iter.size}" class="pagination">

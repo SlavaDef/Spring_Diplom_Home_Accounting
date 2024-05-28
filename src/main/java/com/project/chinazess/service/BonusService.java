@@ -3,6 +3,8 @@ package com.project.chinazess.service;
 import com.project.chinazess.models.Bonus;
 import com.project.chinazess.repo.BonusRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,14 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 public class BonusService {
 
-   // private static final Logger LOGGER = LogManager.getLogger(AddController.class);
+    // private static final Logger LOGGER = LogManager.getLogger(AddController.class);
 
     private BonusRepo repo;
 
     @Transactional
     public void addBonus(Bonus bonus) {
-       //  bonus.setDate(LocalDate.now());
-         repo.save(bonus);
+        //  bonus.setDate(LocalDate.now());
+        repo.save(bonus);
     }
 
     @Transactional
@@ -33,7 +35,7 @@ public class BonusService {
     public Long findBonusByToday() {
         LocalDate today = LocalDate.now();
         LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
-        List<Bonus>  bonuses = repo.findAllByDate(test);
+        List<Bonus> bonuses = repo.findAllByDate(test);
         return returnCount(bonuses);
     }
 
@@ -64,12 +66,12 @@ public class BonusService {
     }
 
     @Transactional
-    public void deleteBonus(Bonus bonus){
+    public void deleteBonus(Bonus bonus) {
         repo.delete(bonus);
     }
 
     @Transactional
-    public Bonus getBonusById(Long id){
+    public Bonus getBonusById(Long id) {
         return repo.findById(id).orElseThrow();
     }
 
@@ -78,6 +80,27 @@ public class BonusService {
         repo.save(bonus);
     }
 
+
+    @Transactional(readOnly = true)
+    public List<Bonus> findAll(Pageable pageable) {
+
+        return repo.findAll(pageable).getContent();
+    }
+
+    @Transactional(readOnly = true)
+    public long count() {
+        return repo.count();
+    }
+
+    @Transactional
+    public List<Bonus> bonusById(Long id, Pageable pageable) {
+        Page<Bonus> page = id == null
+
+                ? repo.findAll(pageable)
+                : repo.findAllById(id, pageable);
+
+        return page.getContent();
+    }
 
 
     @Transactional

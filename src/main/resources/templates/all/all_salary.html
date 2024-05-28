@@ -10,7 +10,7 @@
         padding: 10px;
         border-radius: 25px;
         width: 900px;
-        height: 1500px;
+        height: 1400px;
         position: absolute;
         top: 5%;
         left: 20%;
@@ -30,10 +30,43 @@
         color: blue;
     }
 
+    a:link {
+        color: green;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .pagination {
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: blue;
+    }
+
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: green;
+        border: 1px solid #4CAF50;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: cadetblue;
+    }
+
 </style>
 
 <body>
-<a class=" py-2 text-dark" href="http://localhost:8080/all_incomes"><h2>< Back</h2></a>
+<a class=" py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
 
 <div id="example1"  style="background-color:#ffdd00" class="container mt-5">
     <h2 th:text=" ${date}"></h2>
@@ -56,6 +89,14 @@
         </form>
         <hr>
     </div>
+
+
+<div class="center">
+    <div th:each="el : ${count}" class="pagination">
+        <a th:href="'/allSalaryByDay?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
+
+    </div>
+</div>
 </div>
 
 </body>
