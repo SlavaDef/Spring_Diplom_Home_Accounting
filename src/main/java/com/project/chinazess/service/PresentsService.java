@@ -6,10 +6,13 @@ import com.project.chinazess.models.Presents;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.PresentsRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,6 +80,32 @@ public class PresentsService {
     @Transactional
     public void updatePresent(Presents present) {
         repo.save(present);
+    }
+
+    @Transactional(readOnly = true)
+    public long count() {
+        return repo.count();
+    }
+
+    @Transactional
+    public List<Presents> allPageablePresentsByDate(LocalDate date, Pageable pageable) {
+        Page<Presents> page = date == null
+
+                ? repo.findAll(pageable)
+                : repo.findAllByDate(date, pageable);
+
+        return page.getContent();
+    }
+
+    @Transactional
+    public List<Integer> getListOfPresentsPages() {
+        long totalCount = count();
+        long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
+        List<Integer> numb = new ArrayList<>();
+        for (int i = 0; i < res; i++) {
+            numb.add(i);
+        }
+        return numb;
     }
 
 

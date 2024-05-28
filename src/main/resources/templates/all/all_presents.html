@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AllPresentsByDay</title>
+    <title>AllBonusByDay</title>
 </head>
 <style>
     #example1 {
@@ -10,58 +10,111 @@
         padding: 10px;
         border-radius: 25px;
         width: 900px;
-        height: 1500px;
+        height: 1150px;
         position: absolute;
         top: 5%;
         left: 20%;
     }
+
+    .button5 {
+        border-radius: 12px;
+        background-color: greenyellow;
+    }
+
     a:link {
         color: green;
         background-color: transparent;
         text-decoration: none;
     }
 
+    .center {
+        text-align: center;
+    }
+
+
     body {
         background-image: url('../../static/ocean.png');
         background-size: cover;
     }
 
-    h4,h2 {
-        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
-    }
-
-    h1 {
+    h2 {
         font-family: 'Comic Sans MS', 'Verdana', sans-serif;
         color: blue;
+    }
+
+    h1, h5 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+
+    }
+
+    .pagination {
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: blue;
+    }
+
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: green;
+        border: 1px solid #4CAF50;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: cadetblue;
     }
 
 
 </style>
 
 <body>
-<a class=" py-2 text-dark" href="http://localhost:8080/all_incomes"><h1>< Back</h1></a>
+<a class="py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
 
-<div id="example1"  style="background-color:#ffdd00" class="container mt-5">
-    <h2 th:text=" ${date}"></h2>
+<div id="example1" style="background-color:#ffdd00" class="container mt-5">
+    <h1 th:text=" ${date}"></h1>
     <hr>
+
+
     <div th:each="el : ${dayList}" class="alert alert-info mt-2">
 
 
-        <h1 th:text="'Present = ' + ${el.getPresents()}"></h1>
-        <h4 th:text="${el.getDescription()}"></h4>
+        <h2 th:text="'Salary = ' + ${el.getPresents()} +' uan'"></h2>
+        <h5 th:text="${el.getDescription()}"></h5>
 
-        <!-- силка/кнопка на note + елемент id для кожної запісі своя силка -->
-        <a th:href="'/editPresent/'+ ${el.getId()}" class="btn btn-warning">Edit</a> <br><br>
+        <table class="table table-striped">
 
-        <!--додаємо форму для видалення, для кнопки -->
+            <tr>
 
-        <form th:action="'/deletePresent'" method="post" >
-            <input type="hidden" name="id" th:value="${el.getId()}">
-            <button type="submit" class="btn btn-success">Delete</button>
-        </form>
+                <th><a th:href="'/editPresent/'+ ${el.getId()}" class="button5">Edit</a></th>
+
+                <th></th>
+                <th></th>
+
+                <th>
+                    <form th:action="'/deletePresent'" method="post">
+                        <input type="hidden" name="id" th:value="${el.getId()}">
+                        <button type="submit" class="button5">Delete</button>
+                    </form>
+                </th>
+
+            </tr>
+        </table>
         <hr>
     </div>
-</div>
 
+    <div class="center">
+        <div th:each="el : ${count}" class="pagination">
+            <a th:href="'/allPresentsByDay?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
+
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

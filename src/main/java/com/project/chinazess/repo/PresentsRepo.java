@@ -2,7 +2,10 @@ package com.project.chinazess.repo;
 
 
 
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Presents;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,6 +17,8 @@ import java.util.List;
 public interface PresentsRepo extends JpaRepository<Presents, Long> {
 
     List<Presents> findAllByDate(LocalDate date);
+
+    Page<Presents> findAllByDate(LocalDate date, Pageable pageable);
 
     List<Presents> findAllByDateBetween(LocalDate date, LocalDate date2);
 

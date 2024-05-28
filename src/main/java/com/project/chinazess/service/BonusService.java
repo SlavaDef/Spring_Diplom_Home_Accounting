@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -81,11 +82,11 @@ public class BonusService {
     }
 
 
-    @Transactional(readOnly = true)
-    public List<Bonus> findAll(Pageable pageable) {
+  /*  @Transactional(readOnly = true)
+    public List<Bonus> findAll2(Pageable pageable) {
 
         return repo.findAll(pageable).getContent();
-    }
+    } */
 
     @Transactional(readOnly = true)
     public long count() {
@@ -93,13 +94,24 @@ public class BonusService {
     }
 
     @Transactional
-    public List<Bonus> bonusById(Long id, Pageable pageable) {
-        Page<Bonus> page = id == null
+    public List<Bonus> bonusByDate(LocalDate date, Pageable pageable) {
+        Page<Bonus> page = date == null
 
                 ? repo.findAll(pageable)
-                : repo.findAllById(id, pageable);
+                : repo.findAllByDate(date, pageable);
 
         return page.getContent();
+    }
+
+    @Transactional
+    public List<Integer> getListOfBonusPages() {
+        long totalCount = repo.count();
+        long result = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
+        List<Integer> numb = new ArrayList<>();
+        for (int i = 0; i < result; i++) {
+            numb.add(i);
+        }
+        return numb;
     }
 
 

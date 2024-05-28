@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AllSalaryByDay</title>
+    <title>AllBonusByDay</title>
 </head>
 <style>
     #example1 {
@@ -10,24 +10,15 @@
         padding: 10px;
         border-radius: 25px;
         width: 900px;
-        height: 1400px;
+        height: 1150px;
         position: absolute;
         top: 5%;
         left: 20%;
     }
 
-    body {
-        background-image: url('../../static/ocean.png');
-        background-size: cover;
-    }
-
-    h2 {
-        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
-    }
-
-    h1 {
-        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
-        color: blue;
+    .button5 {
+        border-radius: 12px;
+        background-color: greenyellow;
     }
 
     a:link {
@@ -38,6 +29,22 @@
 
     .center {
         text-align: center;
+    }
+
+
+    body {
+        background-image: url('../../static/ocean.png');
+        background-size: cover;
+    }
+
+    h2 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+        color: blue;
+    }
+
+    h1, h5 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+
     }
 
     .pagination {
@@ -63,41 +70,51 @@
         background-color: cadetblue;
     }
 
+
 </style>
 
 <body>
-<a class=" py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
+<a class="py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
 
-<div id="example1"  style="background-color:#ffdd00" class="container mt-5">
-    <h2 th:text=" ${date}"></h2>
+<div id="example1" style="background-color:#ffdd00" class="container mt-5">
+    <h1 th:text=" ${date}"></h1>
     <hr>
+
+
     <div th:each="el : ${dayList}" class="alert alert-info mt-2">
 
 
-        <h1 th:text="'Salary = ' + ${el.getSalary()}"></h1>
-        <h2 th:text="${el.getDescription()}"></h2>
+        <h2 th:text="'Salary = ' + ${el.getSalary()} +' uan'"></h2>
+        <h5 th:text="${el.getDescription()}"></h5>
 
+        <table class="table table-striped">
 
-        <!-- силка/кнопка на note + елемент id для кожної запісі своя силка -->
-        <a th:href="'/editSalary/'+ ${el.getId()}" class="btn btn-warning">Edit</a> <br><br>
+            <tr>
 
-        <!--додаємо форму для видалення, для кнопки -->
+                <th><a th:href="'/editSalary/'+ ${el.getId()}" class="button5">Edit</a></th>
 
-        <form th:action="'/deleteSalary'" method="post" >
-            <input type="hidden" name="id" th:value="${el.getId()}">
-            <button type="submit" class="btn btn-success">Delete</button>
-        </form>
+                <th></th>
+                <th></th>
+
+                <th>
+                    <form th:action="'/deleteSalary'" method="post">
+                        <input type="hidden" name="id" th:value="${el.getId()}">
+                        <button type="submit" class="button5">Delete</button>
+                    </form>
+                </th>
+
+            </tr>
+        </table>
         <hr>
     </div>
 
+    <div class="center">
+        <div th:each="el : ${count}" class="pagination">
+            <a th:href="'/allSalaryByDay?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
 
-<div class="center">
-    <div th:each="el : ${count}" class="pagination">
-        <a th:href="'/allSalaryByDay?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
-
+        </div>
     </div>
-</div>
-</div>
 
+</div>
 </body>
 </html>

@@ -4,8 +4,6 @@ import com.project.chinazess.models.*;
 import com.project.chinazess.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -71,34 +70,22 @@ public class BonusController {
 
     @GetMapping("/allBonusesByDay")
     public String getBon(
-            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) LocalDate date,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int limit, Model model
     ) {
-        List<Bonus> bonusList = bonusService.bonusById(
-                id, PageRequest.of(page, limit));
+        date = LocalDate.now();
+        LocalDate test = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        List<Bonus> bonusList = bonusService.bonusByDate(
+                test, PageRequest.of(page, limit));
+
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("dayList", bonusList);
-        model.addAttribute("count", getListOfPages());
+        model.addAttribute("count", bonusService.getListOfBonusPages());
         return "all/all_bonuses";
     }
 
     // ?page=2
-
-
-    private long getPageCount() { // метод рахує скільки треба сторінок
-        long totalCount = bonusService.count();
-        return (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
-    }
-
-    private List<Integer> getListOfPages() {
-
-        List<Integer> numb = new ArrayList<>();
-        for (int i = 0; i < getPageCount(); i++) {
-            numb.add(i);
-        }
-        return numb;
-    }
 
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,12 +66,12 @@ public class SalaryService {
         return returnCount(salaries);
     }
 
-  /*  @Transactional
+    @Transactional
     public List<Salary> findAllSalaryByToday() {
         LocalDate today = LocalDate.now();
         LocalDate test = LocalDate.of(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
         return salaryRepo.findAllByDate(test);
-    } */
+    }
 
     @Transactional
     public void deleteSalary(Salary salary) {
@@ -100,6 +101,17 @@ public class SalaryService {
                 : salaryRepo.findAllByDate(date, pageable);
 
         return page.getContent();
+    }
+
+    @Transactional
+    public List<Integer> getListOfSalaryPages() {
+        long totalCount = count();
+        long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
+        List<Integer> numb = new ArrayList<>();
+        for (int i = 0; i < res; i++) {
+            numb.add(i);
+        }
+        return numb;
     }
 
 

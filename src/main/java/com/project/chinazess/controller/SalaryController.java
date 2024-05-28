@@ -92,18 +92,10 @@ public class SalaryController {
 
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("dayList", salaryList);
-        model.addAttribute("count", getListOfSalaryPages());
+        model.addAttribute("count", salaryService.getListOfSalaryPages());
         return "all/all_salary";
     }
 
 
-    private List<Integer> getListOfSalaryPages() {
-        long totalCount = salaryService.count();
-        long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
-        List<Integer> numb = new ArrayList<>();
-        for (int i = 0; i < res; i++) {
-            numb.add(i);
-        }
-        return numb;
-    }
+
 }

@@ -2,9 +2,11 @@ package com.project.chinazess.controller;
 
 import com.project.chinazess.models.Another;
 import com.project.chinazess.models.Count;
+import com.project.chinazess.models.Salary;
 import com.project.chinazess.service.AnotherService;
 import com.project.chinazess.service.CountService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -22,7 +26,7 @@ public class AnotherController {
    private AnotherService anotherService;
    private CountService countService;
 
-    @GetMapping("/allAnotherByDay")
+  //  @GetMapping("/allAnotherByDay")
     public String allAnotherByDay(Model model) {
 
         model.addAttribute("date", LocalDate.now());
@@ -70,7 +74,34 @@ public class AnotherController {
 
         en.setAnother(another);
         en.setDescription(description);
-        anotherService.updateBonus(en);
+        anotherService.updateAnother(en);
         return "redirect:/allAnotherByDay";
+    }
+
+    @GetMapping("/allAnotherByDay")
+    public String getAllAnotherWithPageable(
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+        date = LocalDate.now();
+        LocalDate test = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        List<Another> anotherList = anotherService.allPageableAnotherByDate(
+                test, PageRequest.of(page, limit));
+
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("dayList", anotherList);
+        model.addAttribute("count", getListOfAnotherPages());
+        return "all/all_another";
+    }
+
+
+    private List<Integer> getListOfAnotherPages() {
+        long res = (anotherService.count() / 6 + ((anotherService.count() % 6 > 0) ? 1 : 0));
+        List<Integer> numb = new ArrayList<>();
+        for (int i = 0; i < res; i++) {
+            numb.add(i);
+        }
+        return numb;
     }
 }

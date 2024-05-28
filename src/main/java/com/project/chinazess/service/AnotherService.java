@@ -2,8 +2,11 @@ package com.project.chinazess.service;
 
 import com.project.chinazess.models.Another;
 import com.project.chinazess.models.Bonus;
+import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.AnotherRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,8 +75,24 @@ public class AnotherService {
     }
 
     @Transactional
-    public void updateBonus(Another another) {
+    public void updateAnother(Another another) {
         repo.save(another);
+    }
+
+
+    @Transactional(readOnly = true)
+    public long count() {
+        return repo.count();
+    }
+
+    @Transactional
+    public List<Another> allPageableAnotherByDate(LocalDate date, Pageable pageable) {
+        Page<Another> page = date == null
+
+                ? repo.findAll(pageable)
+                : repo.findAllByDate(date, pageable);
+
+        return page.getContent();
     }
 
 
