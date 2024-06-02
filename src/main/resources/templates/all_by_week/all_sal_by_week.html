@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AllBonusByDay</title>
+</head>
+<style>
+    #example1 {
+        border: 10px solid #006fff;
+        padding: 10px;
+        border-radius: 25px;
+        width: 900px;
+        height: 1150px;
+        position: absolute;
+        top: 5%;
+        left: 20%;
+    }
+
+    .button5 {
+        border-radius: 12px;
+        background-color: greenyellow;
+    }
+
+    a:link {
+        color: green;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+
+    body {
+        background-image: url('../../static/ocean.png');
+        background-size: cover;
+    }
+
+    h2 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+        color: blue;
+    }
+
+    h1, h5 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+
+    }
+
+    .pagination {
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: blue;
+    }
+
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: green;
+        border: 1px solid #4CAF50;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: cadetblue;
+    }
+
+
+</style>
+
+<body>
+<a class="py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
+
+<div id="example1" style="background-color:#ffdd00" class="container mt-5">
+
+    <h1 th:text="${date2}+' - '+${date}"></h1>
+    <hr>
+
+    <div th:each="el : ${weekList}" class="alert alert-info mt-2">
+
+
+        <h2 th:text="'Salary = ' + ${el.getSalary()} +' uan'"></h2>
+        <h5 th:text="${el.getDescription()}"></h5>
+
+        <table class="table table-striped">
+
+            <tr>
+
+                <th><a th:href="'/editBonusByWeek/'+ ${el.getId()}" class="button5">Edit</a></th>
+
+                <th></th>
+                <th></th>
+
+                <th>
+                    <form th:action="'/deleteBonusByWeek'" method="post">
+                        <input type="hidden" name="id" th:value="${el.getId()}">
+                        <button type="submit" class="button5">Delete</button>
+                    </form>
+                </th>
+
+            </tr>
+        </table>
+        <hr>
+    </div>
+
+    <div class="center">
+        <div th:each="el : ${count}" class="pagination">
+            <a th:href="'/allSalaryByWeek?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

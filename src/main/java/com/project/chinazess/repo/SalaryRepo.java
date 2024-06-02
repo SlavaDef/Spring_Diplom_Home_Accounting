@@ -28,6 +28,9 @@ public interface SalaryRepo extends JpaRepository<Salary, Long> {
     @Query(value = "SELECT * FROM count.salary WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     List<Salary> findAllDatesByWeek();
 
+    @Query(value = "SELECT * FROM count.salary WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
+    Page<Salary> findAllDatesByWeek(Pageable pageable);
+
     Page<Salary> findAllById(Long id, Pageable pageable);
 
 }

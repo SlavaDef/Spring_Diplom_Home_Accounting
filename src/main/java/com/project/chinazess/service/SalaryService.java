@@ -1,5 +1,6 @@
 package com.project.chinazess.service;
 
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.SalaryRepo;
 import lombok.AllArgsConstructor;
@@ -104,8 +105,20 @@ public class SalaryService {
     }
 
     @Transactional
+    public List<Salary> bonusByWeek(Pageable pageable) {
+
+        Page<Salary> page = salaryRepo.findAllDatesByWeek(pageable);
+
+        if (page == null) {
+            page = salaryRepo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+    @Transactional
     public List<Integer> getListOfSalaryPages() {
-        long totalCount = count();
+        long totalCount = salaryRepo.count();
         long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
         List<Integer> numb = new ArrayList<>();
         for (int i = 0; i < res; i++) {

@@ -97,6 +97,25 @@ public class SalaryController {
         return "all/all_salary";
     }
 
+    @GetMapping("/allSalaryByWeek")
+    public String getBonByWeek(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Salary> salaryList =
+                salaryService.bonusByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate date = salaryList.get(0).getDate();
+        LocalDate date2 = salaryList.get(salaryList.size()-1).getDate();
+
+        model.addAttribute("date", date);
+        model.addAttribute("date2", date2);
+        model.addAttribute("weekList", salaryList);
+        model.addAttribute("count", salaryService.getListOfSalaryPages());
+        return "all_by_week/all_sal_by_week";
+    }
+
 
 
 }
