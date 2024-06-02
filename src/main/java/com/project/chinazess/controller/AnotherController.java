@@ -7,6 +7,7 @@ import com.project.chinazess.service.AnotherService;
 import com.project.chinazess.service.CountService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,7 +88,7 @@ public class AnotherController {
         date = LocalDate.now();
         LocalDate test = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         List<Another> anotherList = anotherService.allPageableAnotherByDate(
-                test, PageRequest.of(page, limit));
+                test, PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("dayList", anotherList);

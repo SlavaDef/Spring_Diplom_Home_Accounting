@@ -104,6 +104,19 @@ public class BonusService {
     }
 
     @Transactional
+    public List<Bonus> bonusByWeek(Pageable pageable) {
+
+        Page<Bonus> page = repo.findAllDatesByWeek(pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+
+    @Transactional
     public List<Integer> getListOfBonusPages() {
         long totalCount = repo.count();
         long result = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));

@@ -8,6 +8,7 @@ import com.project.chinazess.service.CountService;
 import com.project.chinazess.service.SalaryService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,7 +89,7 @@ public class SalaryController {
         date = LocalDate.now();
         LocalDate test = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         List<Salary> salaryList = salaryService.allPageableSalaryByDate(
-                test, PageRequest.of(page, limit));
+                test, PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("dayList", salaryList);

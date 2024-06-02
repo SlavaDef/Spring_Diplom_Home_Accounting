@@ -4,6 +4,7 @@ import com.project.chinazess.models.*;
 import com.project.chinazess.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -46,6 +45,12 @@ public class BonusController {
         return "redirect:/allBonusesByDay";
     }
 
+    @PostMapping("/deleteBonusByWeek")
+    public String deleteBonusByWeek(Long id) {
+        bonusService.deleteBonus(bonusService.getBonusById(id));
+        return "redirect:/allBonusesByWeek";
+    }
+
     @GetMapping("/editBonus/{id}") // гет шаблон для редагування
     public String bonusEdit(@PathVariable(value = "id") Long id, Model model) {
         if (bonusService.getBonusById(id) == null) {
@@ -67,9 +72,30 @@ public class BonusController {
         return "redirect:/allBonusesByDay";
     }
 
+    @GetMapping("/editBonusByWeek/{id}") // гет шаблон для редагування
+    public String bonusByWeekEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (bonusService.getBonusById(id) == null) {
+            return "redirect:/allBonusesByWeek";
+        }
+        model.addAttribute("dayList", bonusService.getBonusById(id));
+
+        return "edit/bonus_by_week_edit";
+    }
+
+    @PostMapping("/editBonusByWeek") // post релізація
+    public String bonusByWeekUpdate(Long id, @RequestParam Long bonus,
+                              @RequestParam String description) {
+
+        Bonus bon = bonusService.getBonusById(id);
+        bon.setBonus(bonus);
+        bon.setDescription(description);
+        bonusService.updateBonus(bon);
+        return "redirect:/allBonusesByWeek";
+    }
+
 
     @GetMapping("/allBonusesByDay")
-    public String getBon(
+    public String getBonByToday(
             @RequestParam(required = false) LocalDate date,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int limit, Model model
@@ -77,12 +103,31 @@ public class BonusController {
         date = LocalDate.now();
         LocalDate test = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
         List<Bonus> bonusList = bonusService.bonusByDate(
-                test, PageRequest.of(page, limit));
+                test, PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("dayList", bonusList);
         model.addAttribute("count", bonusService.getListOfBonusPages());
         return "all/all_bonuses";
+    }
+
+    @GetMapping("/allBonusesByWeek")
+    public String getBonByWeek(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Bonus> bonusList =
+                bonusService.bonusByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate date = bonusList.get(0).getDate();
+        LocalDate date2 = bonusList.get(bonusList.size()-1).getDate();
+
+        model.addAttribute("date", date);
+        model.addAttribute("date2", date2);
+        model.addAttribute("dayList", bonusList);
+        model.addAttribute("count", bonusService.getListOfBonusPages());
+        return "all_by_week/all_bon_by_week";
     }
 
     // ?page=2

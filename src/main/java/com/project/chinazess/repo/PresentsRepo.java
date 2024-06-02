@@ -1,8 +1,5 @@
 package com.project.chinazess.repo;
 
-
-
-import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Presents;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

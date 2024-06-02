@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Stack;
 
 @Repository
 public interface BonusRepo extends JpaRepository<Bonus, Long> {
@@ -30,7 +29,9 @@ public interface BonusRepo extends JpaRepository<Bonus, Long> {
     @Query(value = "SELECT * FROM count.bonus WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     List<Bonus> findAllDatesByWeek();
 
-    Page<Bonus> findAllById(Long id, Pageable pageable);
+    @Query(value = "SELECT * FROM count.bonus WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
+    Page<Bonus> findAllDatesByWeek(Pageable pageable);
+
 
 
 
