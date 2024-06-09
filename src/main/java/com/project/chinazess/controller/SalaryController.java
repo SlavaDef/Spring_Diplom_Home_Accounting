@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +60,12 @@ public class SalaryController {
         return "redirect:/allSalaryByDay";
     }
 
+    @PostMapping("/deleteSalaryByWeek")
+    public String deleteSalaryByWeek(Long id) {
+        salaryService.deleteSalary(salaryService.getSalaryById(id));
+        return "redirect:/allSalaryByWeek";
+    }
+
     @GetMapping("/editSalary/{id}") // гет шаблон для редагування
     public String salaryEdit(@PathVariable(value = "id") Long id, Model model) {
         if (salaryService.getSalaryById(id) == null) {
@@ -80,6 +88,27 @@ public class SalaryController {
         return "redirect:/allSalaryByDay";
     }
 
+    @GetMapping("/editSalaryByWeek/{id}") // гет шаблон для редагування
+    public String salaryByWeekEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (salaryService.getSalaryById(id) == null) {
+            return "redirect:/allSalaryByWeek";
+        }
+        model.addAttribute("dayList", salaryService.getSalaryById(id));
+
+        return "edit/salary_by_week_edit";
+    }
+
+    @PostMapping("/editSalaryByWeek") // post релізація
+    public String salaryByWeekUpdate(Long id, @RequestParam Long salary,
+                                    @RequestParam String description) {
+
+        Salary sal = salaryService.getSalaryById(id);
+        sal.setSalary(salary);
+        sal.setDescription(description);
+        salaryService.updateSalary(sal);
+        return "redirect:/allSalaryByWeek";
+    }
+
     @GetMapping("/allSalaryByDay")
     public String getAllSalaryWithPageable(
             @RequestParam(required = false) LocalDate date,
@@ -98,16 +127,17 @@ public class SalaryController {
     }
 
     @GetMapping("/allSalaryByWeek")
-    public String getBonByWeek(
+    public String getAllSalaryByWeek(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int limit, Model model
     ) {
 
         List<Salary> salaryList =
-                salaryService.bonusByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+                salaryService.salariesByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
-        LocalDate date = salaryList.get(0).getDate();
-        LocalDate date2 = salaryList.get(salaryList.size()-1).getDate();
+        LocalDate date = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+        LocalDate date2 = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
 
         model.addAttribute("date", date);
         model.addAttribute("date2", date2);

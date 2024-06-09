@@ -98,6 +98,20 @@ public class PresentsService {
     }
 
     @Transactional
+    public List<Presents> presentByWeek(Pageable pageable) {
+
+        Page<Presents> page = repo.findAllDatesByWeek(pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+
+
+    @Transactional
     public List<Integer> getListOfPresentsPages() {
         long totalCount = count();
         long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));

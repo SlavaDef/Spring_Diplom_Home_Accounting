@@ -105,7 +105,7 @@ public class SalaryService {
     }
 
     @Transactional
-    public List<Salary> bonusByWeek(Pageable pageable) {
+    public List<Salary> salariesByWeek(Pageable pageable) {
 
         Page<Salary> page = salaryRepo.findAllDatesByWeek(pageable);
 

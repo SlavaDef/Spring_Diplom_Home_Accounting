@@ -37,14 +37,14 @@ public class AppConfig implements WebMvcConfigurer {
                 for (int i = 0; i < 10; i++) {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
-                    bonus.setDate(LocalDate.of(2024, 6, 2));
+                    bonus.setDate(LocalDate.of(2024, 6, 9));
                     bonusService.addBonus(bonus);
 
                 }
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 8; i++) {
                     Salary salary = new Salary(getRandomLong(),"something"+i);
                     salary .setCount(count);
-                    salary .setDate(LocalDate.of(2024, 6, 2));
+                    salary .setDate(LocalDate.of(2024, 6, 1+i));
                     salaryService.addSalary(salary);
 
                 }
@@ -56,10 +56,10 @@ public class AppConfig implements WebMvcConfigurer {
                     anotherService.addAnother(another);
 
                 }
-                for (int i = 0; i < 25; i++) {
+                for (int i = 0; i < 8; i++) {
                     Presents presents = new Presents(getRandomLong(),"something"+i);
                     presents.setCount(count);
-                    presents.setDate(LocalDate.of(2024, 6, 2));
+                    presents.setDate(LocalDate.of(2024, 6, 1+i));
                     presentsService.addPresent(presents);
 
                 }

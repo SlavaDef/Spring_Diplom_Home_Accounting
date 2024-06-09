@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 
@@ -120,12 +122,13 @@ public class BonusController {
         List<Bonus> bonusList =
                 bonusService.bonusByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
-        LocalDate date = bonusList.get(0).getDate();
-        LocalDate date2 = bonusList.get(bonusList.size()-1).getDate();
+        LocalDate beginDate = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        model.addAttribute("date", date);
-        model.addAttribute("date2", date2);
-        model.addAttribute("dayList", bonusList);
+        LocalDate endDate = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("weekList", bonusList);
         model.addAttribute("count", bonusService.getListOfBonusPages());
         return "all_by_week/all_bon_by_week";
     }

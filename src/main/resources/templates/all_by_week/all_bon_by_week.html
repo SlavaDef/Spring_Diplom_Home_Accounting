@@ -78,10 +78,10 @@
 
 <div id="example1" style="background-color:#ffdd00" class="container mt-5">
 
-  <h1 th:text="${date2}+' - '+${date}"></h1>
+  <h1 th:text="${beginDate}+' - '+${endDate}"></h1>
   <hr>
 
-  <div th:each="el : ${dayList}" class="alert alert-info mt-2">
+  <div th:each="el : ${weekList}" class="alert alert-info mt-2">
 
 
     <h2 th:text="'Bonus = ' + ${el.getBonus()} +' uan'"></h2>

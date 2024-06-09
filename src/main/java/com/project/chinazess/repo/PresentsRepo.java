@@ -1,5 +1,6 @@
 package com.project.chinazess.repo;
 
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Presents;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +27,8 @@ public interface PresentsRepo extends JpaRepository<Presents, Long> {
 
     @Query(value = "SELECT * FROM count.presents WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     List<Presents> findAllDatesByWeek();
+
+    @Query(value = "SELECT * FROM count.presents WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
+    Page<Presents> findAllDatesByWeek(Pageable pageable);
 
 }
