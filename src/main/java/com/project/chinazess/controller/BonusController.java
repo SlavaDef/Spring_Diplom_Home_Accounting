@@ -53,6 +53,12 @@ public class BonusController {
         return "redirect:/allBonusesByWeek";
     }
 
+    @PostMapping("/deleteBonusByMonth")
+    public String deleteBonusByMonth(Long id) {
+        bonusService.deleteBonus(bonusService.getBonusById(id));
+        return "redirect:/allBonusesByMonth";
+    }
+
     @GetMapping("/editBonus/{id}") // гет шаблон для редагування
     public String bonusEdit(@PathVariable(value = "id") Long id, Model model) {
         if (bonusService.getBonusById(id) == null) {
@@ -79,7 +85,7 @@ public class BonusController {
         if (bonusService.getBonusById(id) == null) {
             return "redirect:/allBonusesByWeek";
         }
-        model.addAttribute("dayList", bonusService.getBonusById(id));
+        model.addAttribute("weekList", bonusService.getBonusById(id));
 
         return "edit/bonus_by_week_edit";
     }
@@ -93,6 +99,29 @@ public class BonusController {
         bon.setDescription(description);
         bonusService.updateBonus(bon);
         return "redirect:/allBonusesByWeek";
+    }
+
+    @GetMapping("/editBonusByMonth/{id}")
+    public String bonusByMonthEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (bonusService.getBonusById(id) == null) {
+            return "redirect:/allBonusesByMonth";
+        }
+        model.addAttribute("monthList", bonusService.getBonusById(id));
+
+        return "edit/bonus_by_month_edit";
+    }
+
+    @PostMapping("/editBonusByMonth")
+    public String bonusByMonthUpdate(Long id, @RequestParam Long bonus,
+                                    @RequestParam String description) {
+
+        Bonus bon = bonusService.getBonusById(id);
+        bon.setBonus(bonus);
+        bon.setDescription(description);
+        //bonusService.deleteBonus(bonusService.getBonusById(id));
+        //bonusService.addBonus(bon);
+        bonusService.updateBonus(bon);
+        return "redirect:/allBonusesByMonth";
     }
 
 
@@ -122,9 +151,11 @@ public class BonusController {
         List<Bonus> bonusList =
                 bonusService.bonusByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
-        LocalDate beginDate = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        LocalDate endDate = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+        LocalDate now = LocalDate.now();
+        LocalDate beginDate = now.with(DayOfWeek.MONDAY);
+        LocalDate endDate = now.with(DayOfWeek.SUNDAY);
+       // LocalDate endDate = beginDate.plusDays(6);
 
         model.addAttribute("beginDate", beginDate);
         model.addAttribute("endDate", endDate);
@@ -133,7 +164,29 @@ public class BonusController {
         return "all_by_week/all_bon_by_week";
     }
 
-    // ?page=2
+    @GetMapping("/allBonusesByMonth")
+    public String getBonByMonth(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Bonus> bonusList =
+                bonusService.bonusByMonth(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate first = LocalDate.now();
+        LocalDate beginDate =
+                LocalDate.of(first.getYear(), first.getMonthValue(), 1);
+
+
+        LocalDate endDate = LocalDate.of(first.getYear(), first.getMonthValue(), first.lengthOfMonth());
+
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("monthList", bonusList);
+        model.addAttribute("count", bonusService.getListOfBonusPages());
+        return "all_by_month/all_bon_by_month";
+    }
+
 
 
 }

@@ -66,6 +66,12 @@ public class SalaryController {
         return "redirect:/allSalaryByWeek";
     }
 
+    @PostMapping("/deleteSalaryByMonth")
+    public String deleteSalaryByMonth(Long id) {
+        salaryService.deleteSalary(salaryService.getSalaryById(id));
+        return "redirect:/allSalaryByMonth";
+    }
+
     @GetMapping("/editSalary/{id}") // гет шаблон для редагування
     public String salaryEdit(@PathVariable(value = "id") Long id, Model model) {
         if (salaryService.getSalaryById(id) == null) {
@@ -109,6 +115,27 @@ public class SalaryController {
         return "redirect:/allSalaryByWeek";
     }
 
+    @GetMapping("/editSalaryByMonth/{id}")
+    public String salaryByMonthEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (salaryService.getSalaryById(id) == null) {
+            return "redirect:/allSalaryByMonth";
+        }
+        model.addAttribute("monthList", salaryService.getSalaryById(id));
+
+        return "edit/salary_by_month_edit";
+    }
+
+    @PostMapping("/editSalaryByMonth")
+    public String salaryByMonthUpdate(Long id, @RequestParam Long salary,
+                                     @RequestParam String description) {
+
+        Salary sal = salaryService.getSalaryById(id);
+        sal.setSalary(salary);
+        sal.setDescription(description);
+        salaryService.updateSalary(sal);
+        return "redirect:/allSalaryByMonth";
+    }
+
     @GetMapping("/allSalaryByDay")
     public String getAllSalaryWithPageable(
             @RequestParam(required = false) LocalDate date,
@@ -135,15 +162,36 @@ public class SalaryController {
         List<Salary> salaryList =
                 salaryService.salariesByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
-        LocalDate date = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate now = LocalDate.now();
+        LocalDate beginDate = now.with(DayOfWeek.MONDAY);
+        LocalDate endDate = beginDate.plusDays(6);
 
-        LocalDate date2 = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
-
-        model.addAttribute("date", date);
-        model.addAttribute("date2", date2);
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
         model.addAttribute("weekList", salaryList);
         model.addAttribute("count", salaryService.getListOfSalaryPages());
         return "all_by_week/all_sal_by_week";
+    }
+
+    @GetMapping("/allSalaryByMonth")
+    public String getAllSalaryByMonth(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Salary> salaryList =
+                salaryService.salariesByMonth(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate first = LocalDate.now();
+        LocalDate beginDate =
+                LocalDate.of(first.getYear(), first.getMonthValue(), 1);
+
+        LocalDate endDate = LocalDate.of(first.getYear(), first.getMonthValue(), first.lengthOfMonth());
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("monthList", salaryList);
+        model.addAttribute("count", salaryService.getListOfSalaryPages());
+        return "all_by_month/all_sal_by_month";
     }
 
 

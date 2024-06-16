@@ -117,6 +117,18 @@ public class SalaryService {
     }
 
     @Transactional
+    public List<Salary> salariesByMonth(Pageable pageable) {
+
+        Page<Salary> page = salaryRepo.findAllDatesByMonth(pageable);
+
+        if (page == null) {
+            page = salaryRepo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+    @Transactional
     public List<Integer> getListOfSalaryPages() {
         long totalCount = salaryRepo.count();
         long res = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));

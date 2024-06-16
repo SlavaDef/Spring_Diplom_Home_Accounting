@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,6 +94,41 @@ public class AnotherService {
                 : repo.findAllByDate(date, pageable);
 
         return page.getContent();
+    }
+
+    @Transactional
+    public List<Another> anothersByWeek(Pageable pageable) {
+
+        Page<Another> page = repo.findAllDatesByWeek(pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+    @Transactional
+    public List<Another> anothersByMonth(Pageable pageable) {
+
+        Page<Another> page = repo.findAllDatesByMonth(pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+    @Transactional
+    public List<Integer> getListOfAnotherPages() {
+        long totalCount = repo.count();
+        long result = (totalCount / 6 + ((totalCount % 6 > 0) ? 1 : 0));
+        List<Integer> numb = new ArrayList<>();
+        for (int i = 0; i < result; i++) {
+            numb.add(i);
+        }
+        return numb;
     }
 
 

@@ -32,11 +32,11 @@
 <div id="example1" style="background-color:#ffdd00" class="container mt-5">
 
     <h1>Updating</h1>
-    <div th:each="el : ${weekList}">
+    <div th:each="el : ${monthList}">
 
         <!--Форма оновлення-->
 
-        <form th:action='@{/editBonusByWeek(id=${el.getId()})}' method="post">
+        <form th:action='@{/editBonusByMonth(id=${el.getId()})}' method="post">
             <hr>
             <input type="number" th:value="${el.getBonus()}" name="bonus" placeholder="add new bonus"
                    class="form-control"> <br>

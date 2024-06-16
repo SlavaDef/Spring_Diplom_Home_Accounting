@@ -115,6 +115,18 @@ public class BonusService {
         return page.getContent();
     }
 
+    @Transactional
+    public List<Bonus> bonusByMonth(Pageable pageable) {
+
+        Page<Bonus> page = repo.findAllDatesByMonth(pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
 
     @Transactional
     public List<Integer> getListOfBonusPages() {

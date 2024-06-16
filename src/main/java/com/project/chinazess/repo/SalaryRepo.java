@@ -25,6 +25,11 @@ public interface SalaryRepo extends JpaRepository<Salary, Long> {
             "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH", nativeQuery = true)
     List<Salary> findAllDatesByMonth();
 
+    @Query(value = "SELECT * FROM count.salary " +
+            "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
+            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH", nativeQuery = true)
+    Page<Salary> findAllDatesByMonth(Pageable pageable);
+
     @Query(value = "SELECT * FROM count.salary WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     List<Salary> findAllDatesByWeek();
 

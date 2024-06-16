@@ -81,23 +81,23 @@
     <h1 th:text="${beginDate}+' - '+${endDate}"></h1>
     <hr>
 
-    <div th:each="el : ${weekList}" class="alert alert-info mt-2">
+    <div th:each="el : ${monthList}" class="alert alert-info mt-2">
 
 
-        <h2 th:text="'Salary = ' + ${el.getSalary()} +' uan'"></h2>
+        <h2 th:text="'Present = ' + ${el.getPresents()} +' uan'"></h2>
         <h5 th:text="${el.getDescription()}"></h5>
 
         <table class="table table-striped">
 
             <tr>
 
-                <th><a th:href="'/editSalaryByWeek/'+ ${el.getId()}" class="button5">Edit</a></th>
+                <th><a th:href="'/editPresentByMonth/'+ ${el.getId()}" class="button5">Edit</a></th>
 
                 <th></th>
                 <th></th>
 
                 <th>
-                    <form th:action="'/deleteSalaryByWeek'" method="post">
+                    <form th:action="'/deletePresentByMonth'" method="post">
                         <input type="hidden" name="id" th:value="${el.getId()}">
                         <button type="submit" class="button5">Delete</button>
                     </form>
@@ -110,7 +110,7 @@
 
     <div class="center">
         <div th:each="el : ${count}" class="pagination">
-            <a th:href="'/allSalaryByWeek?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
+            <a th:href="'/allPresentsByMonth?page=' + ${el}"><h1 th:text="${el+1}"></h1></a>
 
         </div>
     </div>

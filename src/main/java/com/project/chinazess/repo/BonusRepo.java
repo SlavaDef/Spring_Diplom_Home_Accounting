@@ -21,16 +21,21 @@ public interface BonusRepo extends JpaRepository<Bonus, Long> {
 
     List<Bonus> findAllByDateBetween(LocalDate date, LocalDate date2);
 
-    @Query(value = "SELECT * FROM count.bonus " +
-            "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
-            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH", nativeQuery = true)
-    List<Bonus> findAllDatesByMonth();
-
     @Query(value = "SELECT * FROM count.bonus WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     List<Bonus> findAllDatesByWeek();
 
     @Query(value = "SELECT * FROM count.bonus WHERE YEAR(`date`) = YEAR(NOW()) AND WEEK(`date`, 1) = WEEK(NOW(), 1)", nativeQuery = true)
     Page<Bonus> findAllDatesByWeek(Pageable pageable);
+
+    @Query(value = "SELECT * FROM count.bonus " +
+            "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
+            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH", nativeQuery = true)
+    List<Bonus> findAllDatesByMonth();
+
+    @Query(value = "SELECT * FROM count.bonus " +
+            "WHERE DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')\n" +
+            "AND DATE < DATE_FORMAT(NOW(), '%Y-%m-01') + INTERVAL 1 MONTH", nativeQuery = true)
+    Page<Bonus> findAllDatesByMonth(Pageable pageable);
 
 
 

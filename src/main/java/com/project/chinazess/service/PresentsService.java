@@ -109,6 +109,18 @@ public class PresentsService {
         return page.getContent();
     }
 
+    @Transactional
+    public List<Presents> presentsByMonth(Pageable pageable) {
+
+        Page<Presents> page = repo.findAllDatesByMonth(pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
 
 
     @Transactional

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +26,10 @@ import java.util.List;
 public class AnotherController {
 
 
-   private AnotherService anotherService;
-   private CountService countService;
+    private AnotherService anotherService;
+    private CountService countService;
 
-  //  @GetMapping("/allAnotherByDay")
+    //  @GetMapping("/allAnotherByDay")
     public String allAnotherByDay(Model model) {
 
         model.addAttribute("date", LocalDate.now());
@@ -57,6 +59,18 @@ public class AnotherController {
         return "redirect:/allAnotherByDay";
     }
 
+    @PostMapping("/deleteAnotherByWeek")
+    public String deleteAnotherByWeek(Long id) {
+        anotherService.deleteAnother(anotherService.getAnotherById(id));
+        return "redirect:/allAnotherByWeek";
+    }
+
+    @PostMapping("/deleteAnotherByMonth")
+    public String deleteAnotherByMoth(Long id) {
+        anotherService.deleteAnother(anotherService.getAnotherById(id));
+        return "redirect:/allAnotherByMonth";
+    }
+
     @GetMapping("/editAnother/{id}") // гет шаблон для редагування
     public String anotherEdit(@PathVariable(value = "id") Long id, Model model) {
         if (anotherService.getAnotherById(id) == null) {
@@ -69,7 +83,7 @@ public class AnotherController {
 
     @PostMapping("/editAnother") // post релізація
     public String anotherUpdate(Long id, @RequestParam Long another,
-                              @RequestParam String description) {
+                                @RequestParam String description) {
 
         Another en = anotherService.getAnotherById(id);
 
@@ -77,6 +91,48 @@ public class AnotherController {
         en.setDescription(description);
         anotherService.updateAnother(en);
         return "redirect:/allAnotherByDay";
+    }
+
+    @GetMapping("/editAnotherByWeek/{id}") // гет шаблон для редагування
+    public String anotherByWeekEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (anotherService.getAnotherById(id) == null) {
+            return "redirect:/allAnotherByWeek";
+        }
+        model.addAttribute("weekList", anotherService.getAnotherById(id));
+
+        return "edit/another_by_week_edit";
+    }
+
+    @PostMapping("/editAnotherByWeek") // post релізація
+    public String anotherByWeekUpdate(Long id, @RequestParam Long another,
+                                      @RequestParam String description) {
+        Another en = anotherService.getAnotherById(id);
+        en.setAnother(another);
+        en.setDescription(description);
+        anotherService.updateAnother(en);
+        return "redirect:/allAnotherByWeek";
+
+    }
+
+    @GetMapping("/editAnotherByMonth/{id}") // гет шаблон для редагування
+    public String anotherByMonthEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (anotherService.getAnotherById(id) == null) {
+            return "redirect:/allAnotherByMonth";
+        }
+        model.addAttribute("monthList", anotherService.getAnotherById(id));
+
+        return "edit/another_by_month_edit";
+    }
+
+    @PostMapping("/editAnotherByMonth") // post релізація
+    public String anotherByMonthUpdate(Long id, @RequestParam Long another,
+                                      @RequestParam String description) {
+        Another en = anotherService.getAnotherById(id);
+        en.setAnother(another);
+        en.setDescription(description);
+        anotherService.updateAnother(en);
+        return "redirect:/allAnotherByMonth";
+
     }
 
     @GetMapping("/allAnotherByDay")
@@ -94,6 +150,46 @@ public class AnotherController {
         model.addAttribute("dayList", anotherList);
         model.addAttribute("count", getListOfAnotherPages());
         return "all/all_another";
+    }
+
+    @GetMapping("/allAnotherByWeek")
+    public String getAllAnotherByWeek(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Another> anotherList =
+                anotherService.anothersByWeek(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate now = LocalDate.now();
+        LocalDate beginDate = now.with(DayOfWeek.MONDAY);
+        LocalDate endDate = beginDate.plusDays(6);
+
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("weekList", anotherList);
+        model.addAttribute("count", getListOfAnotherPages());
+        return "all_by_week/all_another_by_week";
+    }
+
+    @GetMapping("/allAnotherByMonth")
+    public String getAllAnotherByMonth(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Another> anotherList =
+                anotherService.anothersByMonth(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate now = LocalDate.now();
+        LocalDate beginDate = now.with(DayOfWeek.MONDAY);
+        LocalDate endDate = beginDate.plusDays(6);
+
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("monthList", anotherList);
+        model.addAttribute("count", getListOfAnotherPages());
+        return "all_by_month/all_another_by_month";
     }
 
 

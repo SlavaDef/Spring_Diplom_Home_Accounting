@@ -36,9 +36,9 @@
 
         <!--Форма оновлення-->
 
-        <form th:action='@{/editBonusByWeek(id=${el.getId()})}' method="post">
+        <form th:action='@{/editAnotherByWeek(id=${el.getId()})}' method="post">
             <hr>
-            <input type="number" th:value="${el.getBonus()}" name="bonus" placeholder="add new bonus"
+            <input type="number" th:value="${el.getAnother()}" name="another" placeholder="update another"
                    class="form-control"> <br>
             <hr>
             <input type="text" th:value="${el.getDescription()}" name="description" placeholder="add new description"
