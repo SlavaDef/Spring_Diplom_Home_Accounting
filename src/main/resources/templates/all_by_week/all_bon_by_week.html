@@ -83,7 +83,7 @@
 
   <div th:each="el : ${weekList}" class="alert alert-info mt-2">
 
-    <h2 th:text="${el.getDate()} +'&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp;'+${el.getBonus()}+' uan'"></h2>
+    <h2 th:text="${el.getDate()} + ', ' + ${el.getTime()} + ' &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp;'+${el.getBonus()}+' uan'"></h2>
     <h5 th:text="${el.getDescription()}"></h5>
 
     <table class="table table-striped">

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,7 +22,13 @@ public class BonusService {
 
     @Transactional
     public void addBonus(Bonus bonus) {
-        //  bonus.setDate(LocalDate.now());
+          bonus.setDate(LocalDate.now());
+          bonus.setTime(LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()));
+        repo.save(bonus);
+    }
+
+    @Transactional
+    public void addBonusForTest(Bonus bonus) {
         repo.save(bonus);
     }
 

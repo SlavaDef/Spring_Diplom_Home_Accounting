@@ -36,18 +36,6 @@ public class AppConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/"); //  кажемо де шукати
     }
 
-  /*  @Bean
-    public ConversionService conversionService() {
-        DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService(false);
-
-        DateTimeFormatterRegistrar dateTimeFormatterRegistrar = new DateTimeFormatterRegistrar();
-        dateTimeFormatterRegistrar.setUseIsoFormat(true);
-        dateTimeFormatterRegistrar.registerFormatters(conversionService);
-
-        return conversionService;
-    } */
-
-
 
     @Bean
     public CommandLineRunner demo(final CountService service, BonusService bonusService,
@@ -65,10 +53,8 @@ public class AppConfig implements WebMvcConfigurer {
                     Bonus bonus = new Bonus(getRandomLong(),"something"+i);
                     bonus.setCount(count);
                     bonus.setDate(LocalDate.of(2024, 6, 1+i));
-                  //  bonus.setDate2(LocalDate.of(2024, 6, 1));
-                   // bonus.setTime(LocalDateTime.now());
-                   // bonus.setTime(LocalTime.now());
-                    bonusService.addBonus(bonus);
+                    bonus.setTime(LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()));
+                    bonusService.addBonusForTest(bonus);
 
                 }
                 for (int i = 0; i < 20; i++) {
