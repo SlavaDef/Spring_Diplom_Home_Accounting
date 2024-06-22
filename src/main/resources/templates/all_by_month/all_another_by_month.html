@@ -78,13 +78,13 @@
 
 <div id="example1" style="background-color:#ffdd00" class="container mt-5">
 
-    <h1 th:text="${beginDate}+' - '+${endDate}"></h1>
+    <h1 th:text="'Another from ' +${beginDate}+' to '+${endDate}"></h1>
     <hr>
 
     <div th:each="el : ${monthList}" class="alert alert-info mt-2">
 
 
-        <h2 th:text="'Another = ' + ${el.getAnother()} +' uan'"></h2>
+        <h2 th:text="${el.getDate()} +'&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp;'+${el.getAnother()}+' uan'"></h2>
         <h5 th:text="${el.getDescription()}"></h5>
 
         <table class="table table-striped">

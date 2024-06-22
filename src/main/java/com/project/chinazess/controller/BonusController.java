@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 
@@ -80,7 +79,7 @@ public class BonusController {
         return "redirect:/allBonusesByDay";
     }
 
-    @GetMapping("/editBonusByWeek/{id}") // гет шаблон для редагування
+    @GetMapping("/editBonusByWeek/{id}")
     public String bonusByWeekEdit(@PathVariable(value = "id") Long id, Model model) {
         if (bonusService.getBonusById(id) == null) {
             return "redirect:/allBonusesByWeek";
@@ -90,7 +89,7 @@ public class BonusController {
         return "edit/bonus_by_week_edit";
     }
 
-    @PostMapping("/editBonusByWeek") // post релізація
+    @PostMapping("/editBonusByWeek")
     public String bonusByWeekUpdate(Long id, @RequestParam Long bonus,
                               @RequestParam String description) {
 

@@ -2,7 +2,6 @@ package com.project.chinazess.controller;
 
 import com.project.chinazess.models.Another;
 import com.project.chinazess.models.Count;
-import com.project.chinazess.models.Salary;
 import com.project.chinazess.service.AnotherService;
 import com.project.chinazess.service.CountService;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +27,6 @@ public class AnotherController {
     private AnotherService anotherService;
     private CountService countService;
 
-    //  @GetMapping("/allAnotherByDay")
-    public String allAnotherByDay(Model model) {
-
-        model.addAttribute("date", LocalDate.now());
-        model.addAttribute("dayList", anotherService.findAllAnothersByToday());
-        return "all/all_another";
-    }
 
     @GetMapping("/add_another")
     public String addAnotherPresent() {
@@ -93,7 +84,7 @@ public class AnotherController {
         return "redirect:/allAnotherByDay";
     }
 
-    @GetMapping("/editAnotherByWeek/{id}") // гет шаблон для редагування
+    @GetMapping("/editAnotherByWeek/{id}")
     public String anotherByWeekEdit(@PathVariable(value = "id") Long id, Model model) {
         if (anotherService.getAnotherById(id) == null) {
             return "redirect:/allAnotherByWeek";
@@ -103,7 +94,7 @@ public class AnotherController {
         return "edit/another_by_week_edit";
     }
 
-    @PostMapping("/editAnotherByWeek") // post релізація
+    @PostMapping("/editAnotherByWeek")
     public String anotherByWeekUpdate(Long id, @RequestParam Long another,
                                       @RequestParam String description) {
         Another en = anotherService.getAnotherById(id);
@@ -114,7 +105,7 @@ public class AnotherController {
 
     }
 
-    @GetMapping("/editAnotherByMonth/{id}") // гет шаблон для редагування
+    @GetMapping("/editAnotherByMonth/{id}")
     public String anotherByMonthEdit(@PathVariable(value = "id") Long id, Model model) {
         if (anotherService.getAnotherById(id) == null) {
             return "redirect:/allAnotherByMonth";
@@ -124,7 +115,7 @@ public class AnotherController {
         return "edit/another_by_month_edit";
     }
 
-    @PostMapping("/editAnotherByMonth") // post релізація
+    @PostMapping("/editAnotherByMonth")
     public String anotherByMonthUpdate(Long id, @RequestParam Long another,
                                       @RequestParam String description) {
         Another en = anotherService.getAnotherById(id);
@@ -181,9 +172,12 @@ public class AnotherController {
         List<Another> anotherList =
                 anotherService.anothersByMonth(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
 
-        LocalDate now = LocalDate.now();
-        LocalDate beginDate = now.with(DayOfWeek.MONDAY);
-        LocalDate endDate = beginDate.plusDays(6);
+        LocalDate first = LocalDate.now();
+        LocalDate beginDate =
+                LocalDate.of(first.getYear(), first.getMonthValue(), 1);
+
+
+        LocalDate endDate = LocalDate.of(first.getYear(), first.getMonthValue(), first.lengthOfMonth());
 
         model.addAttribute("beginDate", beginDate);
         model.addAttribute("endDate", endDate);

@@ -1,7 +1,5 @@
 package com.project.chinazess.controller;
 
-import com.project.chinazess.models.Another;
-import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Count;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.service.CountService;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,14 +25,6 @@ public class SalaryController {
     private SalaryService salaryService;
     private CountService countService;
 
-
-    //   @GetMapping("/allSalaryByDay")
-    public String allSalaryByDay(Model model) {
-
-        model.addAttribute("date", LocalDate.now());
-     //   model.addAttribute("dayList", salaryService.findAllSalaryByToday());
-        return "all/all_salary";
-    }
 
     @GetMapping("/add_salary")
     public String addSalary() {
@@ -193,7 +181,5 @@ public class SalaryController {
         model.addAttribute("count", salaryService.getListOfSalaryPages());
         return "all_by_month/all_sal_by_month";
     }
-
-
 
 }

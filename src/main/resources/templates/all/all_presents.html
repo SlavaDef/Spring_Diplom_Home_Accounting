@@ -77,14 +77,13 @@
 <a class="py-2 text-dark" href="/all_incomes"><h2>< Back</h2></a>
 
 <div id="example1" style="background-color:#ffdd00" class="container mt-5">
-    <h1 th:text=" ${date}"></h1>
+    <h1 th:text=" 'Present by ' + ${date}"></h1>
     <hr>
 
 
     <div th:each="el : ${dayList}" class="alert alert-info mt-2">
 
-
-        <h2 th:text="'Salary = ' + ${el.getPresents()} +' uan'"></h2>
+        <h2 th:text="${el.getDate()} +'&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp;'+${el.getPresents()}+' uan'"></h2>
         <h5 th:text="${el.getDescription()}"></h5>
 
         <table class="table table-striped">
