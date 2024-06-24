@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update_Bonus</title>
+</head>
+<style>
+    #example1 {
+        border: 10px solid #006fff;
+        padding: 10px;
+        border-radius: 25px;
+        width: 900px;
+        height: 400px;
+        position: absolute;
+        top: 5%;
+        left: 20%;
+    }
+
+    body {
+        background-image: url('../../static/ocean.png');
+        background-size: cover;
+    }
+
+    h1, h2 {
+        font-family: 'Comic Sans MS', 'Verdana', sans-serif;
+    }
+
+</style>
+
+<body>
+
+<div id="example1" style="background-color:#ffdd00" class="container mt-5">
+
+    <h1>Updating</h1>
+    <div th:each="el : ${yearList}">
+
+        <!--Форма оновлення-->
+
+        <form th:action='@{/editSalaryByYear(id=${el.getId()})}' method="post">
+            <hr>
+            <input type="number" th:value="${el.getSalary()}" name="salary" placeholder="add new salary"
+                   class="form-control"> <br>
+            <hr>
+            <input type="text" th:value="${el.getDescription()}" name="description" placeholder="add new description"
+                   class="form-control"> <br>
+
+            <hr>
+
+
+            <button type="submit" class="btn btn-success"><h2>Update</h2></button>
+
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

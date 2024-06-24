@@ -133,6 +133,23 @@ public class BonusService {
         return page.getContent();
     }
 
+    @Transactional
+    public List<Bonus> bonusByYear(Pageable pageable) {
+        LocalDate beginDate =
+                LocalDate.of(LocalDate.now().getYear(), 1, 1);
+
+
+        LocalDate endDate = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+
+        Page<Bonus> page = repo.findAllByDateBetween(beginDate,endDate,pageable);
+
+        if (page == null) {
+            page = repo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
 
     @Transactional
     public List<Integer> getListOfBonusPages() {

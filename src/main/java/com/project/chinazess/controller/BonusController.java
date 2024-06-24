@@ -58,6 +58,12 @@ public class BonusController {
         return "redirect:/allBonusesByMonth";
     }
 
+    @PostMapping("/deleteBonusByYear")
+    public String deleteBonusByYear(Long id) {
+        bonusService.deleteBonus(bonusService.getBonusById(id));
+        return "redirect:/allBonusesByYear";
+    }
+
     @GetMapping("/editBonus/{id}") // гет шаблон для редагування
     public String bonusEdit(@PathVariable(value = "id") Long id, Model model) {
         if (bonusService.getBonusById(id) == null) {
@@ -123,6 +129,29 @@ public class BonusController {
         return "redirect:/allBonusesByMonth";
     }
 
+    @GetMapping("/editBonusByYear/{id}")
+    public String bonusByYearEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (bonusService.getBonusById(id) == null) {
+            return "redirect:/allBonusesByYear";
+        }
+        model.addAttribute("yearList", bonusService.getBonusById(id));
+
+        return "edit/bonus_by_year_edit";
+    }
+
+    @PostMapping("/editBonusByYear")
+    public String bonusByYearUpdate(Long id, @RequestParam Long bonus,
+                                     @RequestParam String description) {
+
+        Bonus bon = bonusService.getBonusById(id);
+        bon.setBonus(bonus);
+        bon.setDescription(description);
+        //bonusService.deleteBonus(bonusService.getBonusById(id));
+        //bonusService.addBonus(bon);
+        bonusService.updateBonus(bon);
+        return "redirect:/allBonusesByYear";
+    }
+
 
     @GetMapping("/allBonusesByDay")
     public String getBonByToday(
@@ -184,6 +213,28 @@ public class BonusController {
         model.addAttribute("monthList", bonusList);
         model.addAttribute("count", bonusService.getListOfBonusPages());
         return "all_by_month/all_bon_by_month";
+    }
+
+    @GetMapping("/allBonusesByYear")
+    public String getBonByYear(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Bonus> bonusList =
+                bonusService.bonusByYear(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate beginDate =
+                LocalDate.of(LocalDate.now().getYear(), 1, 1);
+
+
+        LocalDate endDate = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("yearList", bonusList);
+        model.addAttribute("count", bonusService.getListOfBonusPages());
+        return "all_by_year/all_bon_by_year";
     }
 
 

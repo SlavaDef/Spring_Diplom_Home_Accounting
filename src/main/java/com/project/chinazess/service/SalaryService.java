@@ -1,5 +1,6 @@
 package com.project.chinazess.service;
 
+import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.SalaryRepo;
 import lombok.AllArgsConstructor;
@@ -126,6 +127,23 @@ public class SalaryService {
     public List<Salary> salariesByMonth(Pageable pageable) {
 
         Page<Salary> page = salaryRepo.findAllDatesByMonth(pageable);
+
+        if (page == null) {
+            page = salaryRepo.findAll(pageable);
+        }
+
+        return page.getContent();
+    }
+
+    @Transactional
+    public List<Salary> salariesByYear(Pageable pageable) {
+        LocalDate beginDate =
+                LocalDate.of(LocalDate.now().getYear(), 1, 1);
+
+
+        LocalDate endDate = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+
+        Page<Salary> page = salaryRepo.findAllByDateBetween(beginDate, endDate, pageable);
 
         if (page == null) {
             page = salaryRepo.findAll(pageable);

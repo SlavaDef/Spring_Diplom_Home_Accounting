@@ -60,6 +60,12 @@ public class SalaryController {
         return "redirect:/allSalaryByMonth";
     }
 
+    @PostMapping("/deleteSalaryByYear")
+    public String deleteSalaryByYear(Long id) {
+        salaryService.deleteSalary(salaryService.getSalaryById(id));
+        return "redirect:/allSalaryByYear";
+    }
+
     @GetMapping("/editSalary/{id}") // гет шаблон для редагування
     public String salaryEdit(@PathVariable(value = "id") Long id, Model model) {
         if (salaryService.getSalaryById(id) == null) {
@@ -124,6 +130,27 @@ public class SalaryController {
         return "redirect:/allSalaryByMonth";
     }
 
+    @GetMapping("/editSalaryByYear/{id}")
+    public String salaryByYearEdit(@PathVariable(value = "id") Long id, Model model) {
+        if (salaryService.getSalaryById(id) == null) {
+            return "redirect:/allSalaryByYear";
+        }
+        model.addAttribute("yearList", salaryService.getSalaryById(id));
+
+        return "edit/salary_by_year_edit";
+    }
+
+    @PostMapping("/editSalaryByYear")
+    public String salaryByYearUpdate(Long id, @RequestParam Long salary,
+                                      @RequestParam String description) {
+
+        Salary sal = salaryService.getSalaryById(id);
+        sal.setSalary(salary);
+        sal.setDescription(description);
+        salaryService.updateSalary(sal);
+        return "redirect:/allSalaryByYear";
+    }
+
     @GetMapping("/allSalaryByDay")
     public String getAllSalaryWithPageable(
             @RequestParam(required = false) LocalDate date,
@@ -180,6 +207,28 @@ public class SalaryController {
         model.addAttribute("monthList", salaryList);
         model.addAttribute("count", salaryService.getListOfSalaryPages());
         return "all_by_month/all_sal_by_month";
+    }
+
+    @GetMapping("/allSalaryByYear")
+    public String getAllSalaryByYear(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int limit, Model model
+    ) {
+
+        List<Salary> salaryList =
+                salaryService.salariesByYear(PageRequest.of(page, limit, Sort.Direction.DESC, "id"));
+
+        LocalDate beginDate =
+                LocalDate.of(LocalDate.now().getYear(), 1, 1);
+
+
+        LocalDate endDate = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+
+        model.addAttribute("beginDate", beginDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("yearList", salaryList);
+        model.addAttribute("count", salaryService.getListOfSalaryPages());
+        return "all_by_year/all_sal_by_year";
     }
 
 }
