@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,15 @@ public class PresentsService {
 
     @Transactional
     public void addPresent(Presents presents) {
-        //  presents.setDate(LocalDate.now());
+        presents.setDate(LocalDate.now());
+        presents.setTime(LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()));
         repo.save(presents);
 
+    }
+
+    @Transactional
+    public void addPresentForTest(Presents presents) {
+        repo.save(presents);
     }
 
 
@@ -120,7 +127,6 @@ public class PresentsService {
 
         return page.getContent();
     }
-
 
 
     @Transactional

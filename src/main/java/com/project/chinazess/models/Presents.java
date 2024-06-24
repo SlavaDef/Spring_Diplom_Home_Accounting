@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -25,6 +26,9 @@ public class Presents {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate date = LocalDate.now();
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm")
+    private LocalTime time = LocalTime.now();
 
     @ManyToOne
     @JoinColumn(name="count_id")

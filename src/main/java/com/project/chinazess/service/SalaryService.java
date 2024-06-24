@@ -1,6 +1,5 @@
 package com.project.chinazess.service;
 
-import com.project.chinazess.models.Bonus;
 import com.project.chinazess.models.Salary;
 import com.project.chinazess.repo.SalaryRepo;
 import lombok.AllArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,13 @@ public class SalaryService {
 
     @Transactional
     public void addSalary(Salary salary) {
-        // salary.setDate(LocalDate.now());
+        salary.setDate(LocalDate.now());
+        salary.setTime(LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()));
+        salaryRepo.save(salary);
+    }
+
+    @Transactional
+    public void addSalaryForTest(Salary salary) {
         salaryRepo.save(salary);
     }
 

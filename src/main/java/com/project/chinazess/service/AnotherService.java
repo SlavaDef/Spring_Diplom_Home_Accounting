@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,15 @@ public class AnotherService {
     private AnotherRepo repo;
 
     @Transactional
-    public void addAnother(Another  another ) {
-      //  another.setDate(LocalDate.now());
-         repo.save(another);
+    public void addAnother(Another another) {
+        another.setDate(LocalDate.now());
+        another.setTime(LocalTime.now());
+        repo.save(another);
+    }
+
+    @Transactional
+    public void addAnotherForTest(Another another) {
+        repo.save(another);
     }
 
     @Transactional
@@ -57,7 +64,6 @@ public class AnotherService {
     }
 
 
-
     @Transactional
     public List<Another> findAllAnothersByToday() {
         LocalDate today = LocalDate.now();
@@ -66,12 +72,12 @@ public class AnotherService {
     }
 
     @Transactional
-    public void deleteAnother(Another another){
+    public void deleteAnother(Another another) {
         repo.delete(another);
     }
 
     @Transactional
-    public Another getAnotherById(Long id){
+    public Another getAnotherById(Long id) {
         return repo.findById(id).orElseThrow();
     }
 
